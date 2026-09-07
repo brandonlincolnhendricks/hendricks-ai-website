@@ -61,6 +61,28 @@ export const routes = {
     indexable: false,
     built: true,
   },
+  /**
+   * The free instrument (Brandon, 2026-09-07). A visitor enters a website and a
+   * market phrase; the page runs five buyer questions through the four
+   * observed systems and shows the reading, and Hendricks records the contact.
+   * Indexable on purpose: "free AI visibility check" is a buyer's own phrase,
+   * and the page answers it in visible copy before the form.
+   *
+   * OVERLAPS /observe ABOVE, AND BRANDON HAS NOT RULED. Both are public
+   * surfaces that observe a brand across the answer engines. They differ in
+   * three ways that matter: this one takes a contact and is a lead
+   * instrument, /observe takes brand and category only; this one probes the
+   * four observed systems synchronously, /observe queues three and leaves
+   * Gemini unmeasured; this one is indexable, /observe is not. They should
+   * converge into one instrument. Until that ruling, do not link them to each
+   * other and do not describe either as the other.
+   */
+  aiVisibilityCheck: {
+    path: '/ai-visibility-check',
+    label: 'AI Visibility Check',
+    indexable: true,
+    built: true,
+  },
   howItWorks: { path: '/how-it-works', label: 'How It Works', indexable: true, built: true },
   forBrands: { path: '/for-brands', label: 'For Brands', indexable: true, built: true },
   forAgencies: { path: '/for-agencies', label: 'For Agencies', indexable: true, built: true },

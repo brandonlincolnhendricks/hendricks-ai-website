@@ -48,6 +48,7 @@ export const homeMeta = {
 /** Station ids, which are also the page's published anchors (04 decisions). */
 export const stations = {
   hero: 'hero',
+  check: 'ai-visibility-check',
   problem: 'before-the-click',
   system: 'what-hendricks-does',
   /** The merged system station keeps the `#solutions` anchor for inbound links (04a section 3). */
@@ -115,6 +116,32 @@ export const hero = {
    * numberless fallback is what ships (CANON R5; 04 decision 6).
    */
   proofLine: line('heroProofLine'),
+} as const
+
+/* ========================================================================== */
+/* Station 1a. The free check                                                 */
+/* ========================================================================== */
+
+/**
+ * The lead-generation instrument Brandon asked for on 2026-09-07: one field on
+ * the homepage, the full check on its own route. The station collects nothing
+ * personal, only a website address, so it carries no notice at collection;
+ * the contact fields and the notice live on /ai-visibility-check, where the
+ * run happens. New copy, CONTENT_VERIFICATION V3.
+ */
+export const check = {
+  eyebrow: 'Free AI Visibility Check',
+  title: 'Is your brand in the answer?',
+  lead: {
+    claim: 'Enter a website.',
+    continuation:
+      'Hendricks asks the AI systems it observes five buyer questions and shows whether your brand was named or cited, with the denominator.',
+  },
+  label: 'Your website',
+  placeholder: 'example.com',
+  submit: 'Check my AI visibility',
+  foot: 'About two minutes. A reading with its denominator, not a score.',
+  href: routes.aiVisibilityCheck.path,
 } as const
 
 /* ========================================================================== */

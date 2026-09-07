@@ -74,6 +74,28 @@ Anchor: `#hero`
 
 ---
 
+## Station 1a. The free check
+
+Anchor: `#ai-visibility-check`
+
+Added 2026-09-07 at Brandon Lincoln Hendricks's request: the lead-generation instrument. One website field on the homepage, the full check on `/ai-visibility-check`. Nothing personal is collected here, so the station carries no notice at collection. Rows V1 to V4 in `CONTENT_VERIFICATION.md`.
+
+**Eyebrow:** Free AI Visibility Check
+
+## Is your brand in the answer?
+
+**Lead, claim:** Enter a website.
+
+**Lead, continuation:** Hendricks asks the AI systems it observes five buyer questions and shows whether your brand was named or cited, with the denominator.
+
+**Field:** Your website. Placeholder: example.com.
+
+**Button:** Check my AI visibility. Destination `/ai-visibility-check`, carrying the website as `?site=`.
+
+**Foot:** About two minutes. A reading with its denominator, not a score.
+
+---
+
 ## Station 2. The loss before the click
 
 Anchor: `#before-the-click`

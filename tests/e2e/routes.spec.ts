@@ -4,6 +4,7 @@ import { indexableBuiltRoutes, routes } from '@/config/routes'
 import { siteConfig } from '@/config/site'
 import * as about from '@/content/pages/about'
 import * as aiSelectionProblem from '@/content/pages/ai-selection-problem'
+import * as avc from '@/content/pages/ai-visibility-check'
 import * as avtop from '@/content/pages/ai-visibility-tool-or-partner'
 import * as contact from '@/content/pages/contact'
 import * as diagnostic from '@/content/pages/diagnostic'
@@ -53,6 +54,7 @@ const commercialRoutes = [
   { path: '/for-agencies', meta: forAgencies.meta, h1: headingText(forAgencies.hero) },
   { path: '/about', meta: about.meta, h1: headingText(about.hero) },
   { path: '/diagnostic', meta: diagnostic.meta, h1: headingText(diagnostic.hero) },
+  { path: '/ai-visibility-check', meta: avc.meta, h1: headingText(avc.hero) },
   { path: '/contact', meta: contact.meta, h1: headingText(contact.hero) },
   { path: '/observe', meta: observe.meta, h1: headingText(observe.hero) },
 ] as const
