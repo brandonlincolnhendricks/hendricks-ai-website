@@ -238,9 +238,15 @@ export async function probe({
     ;({ result, cost } = firstResult(await post(config.path, body, signal)))
   } catch (error) {
     const timeout = error instanceof Error && error.name === 'TimeoutError'
-    // The category is logged; the provider's message is not, because it can
-    // echo the request body.
-    console.error(`[visibility-check] ${engine} ${question.id} ${timeout ? 'timed out' : 'failed'}.`)
+    // The category and this module's own short message ("api 401", "task
+    // 40501") are logged; the provider's response body never is, because it
+    // can echo the request. A transport failure keeps its class name only.
+    const reason = timeout
+      ? 'timed out'
+      : error instanceof Error
+        ? `failed: ${/^(api|task) /.test(error.message) ? error.message : error.name}`
+        : 'failed'
+    console.error(`[visibility-check] ${engine} ${question.id} ${reason}.`)
     return failed(engine, question, timeout ? 'timeout' : 'api')
   }
 
