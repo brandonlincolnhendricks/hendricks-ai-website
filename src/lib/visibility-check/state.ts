@@ -16,6 +16,8 @@ export type VisibilityCheckStatus =
   | 'rate-limited'
   | 'capped'
   | 'unavailable'
+  /** The run happened and no cell measured. The lead was delivered anyway. */
+  | 'failed'
   | 'duplicate'
   | 'error'
 

@@ -35,6 +35,8 @@ function summaryMessage(state: VisibilityCheckState): string | undefined {
       return copy.errors.capped
     case 'unavailable':
       return copy.errors.unavailable
+    case 'failed':
+      return copy.errors.failed
     case 'duplicate':
       return copy.errors.duplicate
     case 'error':

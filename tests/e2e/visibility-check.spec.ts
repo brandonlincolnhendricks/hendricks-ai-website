@@ -53,7 +53,10 @@ test.describe('AI Visibility Check', () => {
     await page.waitForTimeout((MINIMUM_SUBMIT_SECONDS + 0.5) * 1000)
     await page.getByRole('button', { name: copy.submit }).click()
 
-    const alert = page.getByRole('alert')
+    // Filtered on its title: the App Router's hidden route announcer is a
+    // second, empty `role="alert"` on every page, and a bare role query
+    // resolves to both.
+    const alert = page.getByRole('alert').filter({ hasText: copy.errors.summaryTitle })
     await expect(alert).toBeVisible()
     await expect(alert).toBeFocused()
     await expect(alert).toContainText(copy.errors.summaryTitle)

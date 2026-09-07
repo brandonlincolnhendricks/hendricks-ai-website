@@ -138,6 +138,8 @@ export const check = {
     capped:
       'The free check has reached its daily limit. Hendricks pays for every run, so the limit is a real one. Try again tomorrow, or apply for a Diagnostic.',
     unavailable: 'The check is not available right now. Try again later, or apply for a Diagnostic.',
+    failed:
+      'The engines did not answer this time, so there is no reading to show. Hendricks has your details and will run the reading by hand and email it. Try again in an hour, or apply for a Diagnostic.',
     duplicate:
       'A check for this website was already run from this address in the last ten minutes. Its reading was shown on screen at the time; wait ten minutes to run it again.',
     generic: 'The check could not be run. Please try again.',

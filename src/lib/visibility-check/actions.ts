@@ -132,5 +132,18 @@ export async function submitVisibilityCheck(
     console.error(`[visibility-check] ${requestId} delivery threw; the reading was still shown.`)
   })
 
+  /**
+   * A run in which no cell measured is not a reading, and showing twenty
+   * "Not measured" cells as one would be. The lead has already been delivered
+   * above, so Hendricks can run it by hand; the duplicate bucket is released
+   * so the visitor can try again once the engines answer; and the visitor is
+   * told what happened rather than handed a table of nothing.
+   */
+  if (result.summary.cellsMeasured === 0) {
+    await withSharedStore((store) => store.release(key), 'the visibility check duplicate bucket')
+    console.error(`[visibility-check] ${requestId} measured no cell; reported as failed to the visitor.`)
+    return { status: 'failed', values }
+  }
+
   return { status: 'complete', result }
 }

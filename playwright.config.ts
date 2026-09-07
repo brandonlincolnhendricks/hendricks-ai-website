@@ -48,6 +48,25 @@ export default defineConfig({
       OBSERVE_JOB_STORE: 'fs',
       OBSERVE_IP_RATE_LIMIT: '100',
       OBSERVE_FIXTURE: '0',
+      /*
+        The suite must never reach a real destination. `next build` reads
+        `.env.local`, and on 2026-09-07 a local file holding the CRM sheet's
+        service account put forty test rows in the live Leads tab and slowed
+        every form action past the analytics test's window. A process
+        variable outranks the file, so each paid or durable channel is
+        blanked here: no sheet row, no email, no probe, whatever the file
+        says. Production IDs stay out for the same reason the consent test
+        expects them empty.
+      */
+      CRM_SHEET_ID: '',
+      GOOGLE_SHEETS_CLIENT_EMAIL: '',
+      GOOGLE_SHEETS_PRIVATE_KEY: '',
+      RESEND_API_KEY: '',
+      CRM_WEBHOOK_URL: '',
+      DATAFORSEO_LOGIN: '',
+      DATAFORSEO_PASSWORD: '',
+      NEXT_PUBLIC_GA_MEASUREMENT_ID: '',
+      NEXT_PUBLIC_LINKEDIN_PARTNER_ID: '',
     },
   },
 })

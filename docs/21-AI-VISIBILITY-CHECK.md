@@ -77,7 +77,7 @@ A row in the `Visibility Checks` tab with the same data, `Status` set to `New`, 
 
 ## 7. Failure modes, in the order they were designed against
 
-- DataForSEO down or credentials wrong: every cell fails, the reading says "No reading, 0 of 20 cells measured", the email still goes out with the failed grid, the row still lands. Check the balance first.
+- DataForSEO down, credentials wrong, or the account's IP allowlist rejecting Vercel (task 40207, seen on the first preview run 2026-09-07): every cell fails. The email still goes out (subject "cited 0 of 0") and the row still lands with reading `unmeasured`, so the lead is kept; the visitor is told the engines did not answer and can retry in an hour. Check the DataForSEO balance and the allowlist at app.dataforseo.com/api-access first. Vercel functions have no fixed egress IP, so the allowlist must be off for the check to run in production.
 - One engine slow: its cells time out at 170 seconds and are excluded from every denominator; the other fifteen cells read normally.
 - Sheet append fails: logged with the request id, the email still goes out, the reading still shows. Check that the sheet is still shared with the service account and the key is not deleted.
 - Email fails: logged, the row still lands. Check the Resend domain.
@@ -86,3 +86,28 @@ A row in the `Visibility Checks` tab with the same data, `Status` set to `New`, 
 ## 8. Changing the questions
 
 The templates are in `questions.ts` and pinned by a unit test. Adding a sixth question raises every run's cost by a fifth and changes every denominator on the page and in the email, so the copy that says "five questions" and "twenty cells" changes with it. Do not add a brand-name question: it names the brand in the prompt, so a mention would measure the prompt rather than the market.
+
+## 9. Running it locally
+
+`next start` in Next 16 does not load `.env.local`, and `vercel env pull` returns every sensitive value as an empty string, so a local run needs the file filled from local sources and exported into the shell:
+
+```
+vercel env pull .env.local --environment=production --yes
+# Every sensitive value arrives empty, so fill these five by hand:
+#   DATAFORSEO_LOGIN / DATAFORSEO_PASSWORD   from ~/.zshenv
+#   GOOGLE_SHEETS_CLIENT_EMAIL               client_email in the key file below
+#   GOOGLE_SHEETS_PRIVATE_KEY                base64 of private_key in
+#                                            ~/.config/mcp-credentials/website-crm-sheets.json
+#   CRM_SHEET_ID                             the spreadsheet id
+# Then delete the VERCEL_*, NX_* and TURBO_* lines: VERCEL_ENV=production
+# without NEXT_PUBLIC_VERCEL_ENV=production makes every route throw by design.
+set -a; source .env.local; set +a
+pnpm build && pnpm start --port 3200
+```
+
+Delete `.env.local` when you are done rather than parking it. A filled copy in
+the working tree is a service-account key sitting beside the code, and on
+2026-09-07 one leaked into the Playwright build and wrote forty rows to the
+live Leads tab.
+
+`playwright.config.ts` blanks every paid and durable channel for the e2e server, so the suite cannot spend or write rows even with the file present, but a stray `next build` for any other purpose would still read it.
