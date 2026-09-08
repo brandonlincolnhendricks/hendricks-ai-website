@@ -53,6 +53,11 @@ const sourcedDates: Record<string, string> = {
   [routes.whatIsGenerativeEngineOptimization.path]: generativeEngineOptimizationSources.reviewed,
   [routes.aiVisibilityToolOrPartner.path]: aiVisibilityToolOrPartnerSources.reviewed,
   [routes.about.path]: '2026-08-17',
+  // The check was published on 2026-09-07 and the homepage gained its station
+  // the same day. Both are commit-sourced for the same reason /about is:
+  // neither renders a date constant this file could read instead.
+  [routes.aiVisibilityCheck.path]: '2026-09-07',
+  [routes.home.path]: '2026-09-07',
   [routes.corrections.path]: correctionsSources.reviewed,
   [routes.terms.path]: termsOfUse.lastUpdated,
   [routes.privacy.path]: privacyNotice.lastUpdated,
