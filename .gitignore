@@ -56,3 +56,4 @@ next-env.d.ts
 
 # Lighthouse CI reports (lhci autorun writes here)
 /.lighthouseci
+.env*.local

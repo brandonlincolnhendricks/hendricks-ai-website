@@ -340,3 +340,29 @@ is not `approved` the numberless variant ships (CANON R5; 04 decision 6).
 | H15 | H2 "We separate what is observed, inferred, measured, and tested." | Homepage, how Hendricks knows | 04 decision 16. One word changed from the approved "proven", so the headline matches the four labels beneath it. | pending |
 | H16 | H2 "Begin with evidence, not an open-ended retainer." | Homepage, the entry point | 04 decision 19. Replaces the approved "Direct engagements begin with a fixed-scope diagnostic, not an open-ended retainer." | pending |
 | H17 | Delivery-model line "Every engagement runs on the Demand-to-Selection System, a published method with one question and one named output at each stage." | Homepage, the founder note | 04 decision 20. New framing around the approved sentence "Each stage has one question and one named output." Ships in place of F8, which stays pending. | pending |
+
+## AI Visibility Check copy
+
+Requested by Brandon 2026-09-07: "something on the homepage like a lead
+generation tool where they can check to see their AI visibility status live,
+once that is completed that client gets real results and I get an email to add
+to my CRM". The instrument is `/ai-visibility-check` with a one-field station
+on the homepage. The copy is new and makes no client claim, publishes no
+result and no fee; the only figures on the page are read from the published
+Answer Index study. The rows below are the wording review Brandon owes before
+the branch merges. None of these strings is held by the compiler gate in
+`src/content/gate.ts`, which covers the homepage redesign lines only.
+
+| # | Item | Location | What must be verified | Status |
+|---|---|---|---|---|
+| V1 | Page copy: hero, direct answer, "How to read it", "Scope", "Questions people ask", closing | `/ai-visibility-check`, `content/pages/31-ai-visibility-check.md` | Wording. The direct answer says the check uses "the same engine adapters and the same citation parser as The Answer Index"; that is true of the port in `src/lib/visibility-check/engines.ts` and must stay true if either side changes. | pending |
+| V2 | Form and result strings: labels, hints, submit, pending line, the seven error messages, the cell words, the legend, "Hendricks reviews every reading by hand and follows up by email." | `/ai-visibility-check` | Wording, and that the follow-up sentence describes what Brandon will actually do with each row in the CRM sheet. | pending |
+| V3 | Homepage station: "Free AI Visibility Check", "Is your brand in the answer?", the lead, "Your website", "Check my AI visibility", the foot line | Homepage station 1a | Wording. The station collects only a website address, so it carries no notice at collection; confirm with counsel that this reading of `legal/01` holds. | pending |
+| V5 | Two inbound related-list entries pointing at the check: "One brand read across the observed systems, free, with its denominators." on `/ai-visibility-tool-or-partner`, and "Whether one brand is named or cited on these surfaces, read in one run." on `/what-is-ai-mediated-search` | Both pages and their markdown mirrors | Wording, and that a free reading is the right next step to offer a reader of each. Added 2026-09-07 because the check otherwise had one internal link, from the footer, which is not enough for a page meant to be found. Neither entry calls it an audit and neither implies it is the Diagnostic. | pending |
+| V4 | The Answer Index figures quoted on the page: Perplexity self-agreement 0.900, Google AI Overviews 0.622, the 38-minute repeat | `/ai-visibility-check`, "Why did the reading change" | Read from `/research/the-answer-index` (run-2026-09-01T014944Z against run-2026-09-01T022903Z). Approved by derivation if the study's figures stand; re-check if the study is corrected. | pending |
+
+Operational notes recorded with the rows: the run costs roughly $0.70 in
+DataForSEO fees (the ChatGPT endpoint is $0.07 of every $0.09 per question);
+the site refuses runs above `VISIBILITY_CHECK_DAILY_CAP` per UTC day and three
+per visitor per day; and the notice at collection on the form is the Diagnostic
+application's approved sentence, verbatim.

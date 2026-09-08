@@ -36,6 +36,9 @@ describe('Route registry', () => {
         '/ai-selection-problem',
         // Buyer-decision route, docs/17 §5.3. It sits in (editorial) with the
         // definition pages and defines no term.
+        // The free instrument (Brandon, 2026-09-07): one field on the homepage,
+        // the full check on its own commercial route.
+        '/ai-visibility-check',
         '/ai-visibility-tool-or-partner',
         '/contact',
         // R6 in CONTENT_VERIFICATION.md was blocked on missing copy rather than

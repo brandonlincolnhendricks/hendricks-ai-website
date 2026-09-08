@@ -2,6 +2,8 @@ import 'server-only'
 
 import { createHmac, randomInt } from 'node:crypto'
 
+import { appendSheetRow, CRM_TABS } from '@/lib/crm/google-sheets'
+import { leadRow } from '@/lib/crm/rows'
 import { env } from '@/lib/env'
 import { monthlySearchInvestmentOptions } from '@/lib/forms/lead-options'
 import type { LeadSubmissionRecord } from '@/lib/forms/lead-record'
@@ -9,8 +11,9 @@ import type { LeadSubmissionRecord } from '@/lib/forms/lead-record'
 /**
  * Lead delivery (docs/07 section 8, docs/15 section 4, decision D-H).
  *
- * Two destinations behind one call: the notification email, which is required,
- * and the CRM webhook, which is optional. The rule that shapes the module is
+ * Three destinations behind one call: the notification email, which is
+ * required, the CRM sheet, which is the pipeline record for now (Brandon,
+ * 2026-09-07), and the CRM webhook, which is optional. The rule that shapes the module is
  * that a submission is never reported as delivered when nothing durable
  * received it. A form that accepts a lead it cannot deliver is worse than a
  * form that says so, because the visitor believes the message was sent.
@@ -25,6 +28,8 @@ export type DeliveryChannelStatus = 'success' | 'failed' | 'skipped'
 export type DeliveryResult = {
   email: DeliveryChannelStatus
   crmWebhook: DeliveryChannelStatus
+  /** The Google Sheet that is the CRM for now. A durable destination. */
+  sheet: DeliveryChannelStatus
   /** True when at least one durable destination accepted the submission. */
   delivered: boolean
 }
@@ -34,6 +39,7 @@ export function deliveryChannels(result: DeliveryResult): string {
   const channels = [
     result.email === 'success' ? 'email' : null,
     result.crmWebhook === 'success' ? 'crm' : null,
+    result.sheet === 'success' ? 'sheet' : null,
   ].filter(Boolean)
 
   return channels.length > 0 ? channels.join('_') : 'none'
@@ -188,10 +194,18 @@ async function sendCrmWebhook(record: LeadSubmissionRecord): Promise<DeliveryCha
   }
 }
 
+async function appendToCrmSheet(record: LeadSubmissionRecord): Promise<DeliveryChannelStatus> {
+  return appendSheetRow({
+    tab: CRM_TABS.leads,
+    values: leadRow(record),
+    requestId: record.requestId,
+  })
+}
+
 /**
  * Delivers to every configured destination and reports what happened.
  *
- * The two run in parallel because neither depends on the other. Public success
+ * The three run in parallel because none depends on another. Public success
  * needs one durable destination (15 section 4), and it also needs the email
  * adapter to exist: D-H puts a named human on `brandon@hendricks.ai`, and a
  * `skipped` email means the three Resend variables are unset, which is launch
@@ -202,20 +216,22 @@ async function sendCrmWebhook(record: LeadSubmissionRecord): Promise<DeliveryCha
  * the partial success the spec describes.
  */
 export async function deliverLead(record: LeadSubmissionRecord): Promise<DeliveryResult> {
-  const [email, crmWebhook] = await Promise.all([
+  const [email, crmWebhook, sheet] = await Promise.all([
     sendNotificationEmail(record),
     sendCrmWebhook(record),
+    appendToCrmSheet(record),
   ])
 
-  const delivered = email !== 'skipped' && (email === 'success' || crmWebhook === 'success')
+  const delivered =
+    email !== 'skipped' && (email === 'success' || crmWebhook === 'success' || sheet === 'success')
 
-  if (delivered && (email === 'failed' || crmWebhook === 'failed')) {
+  if (delivered && (email === 'failed' || crmWebhook === 'failed' || sheet === 'failed')) {
     console.error(
-      `[leads] ${record.requestId} was delivered partially: email ${email}, crm ${crmWebhook}.`,
+      `[leads] ${record.requestId} was delivered partially: email ${email}, crm ${crmWebhook}, sheet ${sheet}.`,
     )
   }
 
-  return { email, crmWebhook, delivered }
+  return { email, crmWebhook, sheet, delivered }
 }
 
 /**

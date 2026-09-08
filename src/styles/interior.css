@@ -1906,3 +1906,95 @@
     text-decoration-line: underline;
   }
 }
+
+@layer components {
+  /* ---- The AI Visibility Check --------------------------------------------- */
+
+  /*
+   * The homepage station's one-field form: a label, then the input and the
+   * button on one row from 640px. Nothing personal is collected here, so it
+   * carries no notice and stays as small as a search box.
+   */
+  .checkform {
+    max-width: 560px;
+  }
+
+  .checkform > .label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14.5px;
+    font-weight: var(--weight-mono);
+    color: var(--ink);
+  }
+
+  .checkrow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--hx-space-3);
+  }
+
+  @media (min-width: 40rem) {
+    .checkrow {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: stretch;
+    }
+  }
+
+  /* The full form on /ai-visibility-check is wider than a lead form because
+   * its name and email sit in one pair and its hints are longer. */
+  .vform {
+    max-width: 720px;
+  }
+
+  /* The in-flight state: one hairline in the path blue, the same mark the
+   * answer-first block uses, because a run in progress is a reading being
+   * made rather than an error or a success. */
+  .vpending {
+    margin-top: var(--hx-space-6);
+    padding-left: var(--hx-space-4);
+    border-left: var(--hx-stroke-1-5) solid var(--path);
+  }
+
+  .vpending p {
+    max-width: var(--measure-wide);
+    font-size: var(--text-small);
+    line-height: var(--leading-body);
+  }
+
+  /* The reading. A neutral rule, never the tested green: an absent reading is
+   * not a success and a cited one is not a result. */
+  .vresults {
+    max-width: none;
+    padding-left: var(--hx-space-5);
+    border-left: var(--hx-stroke-1-5) solid var(--rule-strong);
+  }
+
+  .vresults .reading-sentence {
+    margin-top: var(--hx-space-5);
+  }
+
+  .vlegend {
+    max-width: var(--measure-wide);
+  }
+
+  .vlegend > li + li {
+    margin-top: var(--hx-space-1);
+  }
+
+  /* Question-shaped headings with their answers, hairline separated. */
+  .qa > * + * {
+    margin-top: var(--hx-space-8);
+    padding-top: var(--hx-space-6);
+    border-top: var(--hx-stroke-1) solid var(--rule);
+  }
+
+  .qa-item > p {
+    margin-top: var(--hx-space-3);
+  }
+
+  @media (max-width: 37.4375rem) {
+    .vresults {
+      padding-left: 14px;
+    }
+  }
+}

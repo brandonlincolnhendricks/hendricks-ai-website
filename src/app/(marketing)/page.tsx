@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { FounderNote } from '@/components/sections/founder-note'
 import { Station } from '@/components/sections/station'
 import { JsonLd } from '@/components/seo/json-ld'
+import { Button } from '@/components/ui/button'
 import { PrimaryCta, RuleLink } from '@/components/ui/cta'
 import { TwoTone } from '@/components/ui/two-tone'
 import { ArtifactPreviewDrawing } from '@/components/visuals/artifact-previews'
@@ -14,6 +15,7 @@ import { SelectionMapPlate } from '@/components/visuals/selection-map-plate'
 import { TwoPathsPlate } from '@/components/visuals/two-paths-plate'
 import { selectionMapData } from '@/content/instruments/selection-map-data'
 import {
+  check,
   diagnostic,
   evidence,
   evidenceRule,
@@ -104,6 +106,47 @@ export default function HomePage() {
           <span className="op">{hero.operatingLine}</span>
           <span>{hero.proofLine}</span>
         </p>
+      </Station>
+
+      {/*
+        1a. The free check (Brandon, 2026-09-07). One field, a GET to the
+        instrument's own route, so it works without JavaScript and collects
+        nothing personal here. The station is the homepage's one addition
+        since the canvas was approved; the height budgets in
+        tests/e2e/homepage.spec.ts were raised by its measured height.
+      */}
+      <Station id={stations.check} ariaLabelledBy="check-title">
+        <div className="split">
+          <div className="words">
+            <p className="text-eyebrow text-ink-2">{check.eyebrow}</p>
+            <h2 id="check-title" className="text-h2 text-ink">
+              {check.title}
+            </h2>
+            <TwoTone sentence={check.lead} className="text-lead" />
+          </div>
+          <div className="figure">
+            <form action={check.href} method="get" className="checkform" aria-labelledby="check-title">
+              <label htmlFor="home-check-site" className="label">
+                {check.label}
+              </label>
+              <div className="checkrow">
+                <input
+                  id="home-check-site"
+                  name="site"
+                  type="text"
+                  inputMode="url"
+                  autoComplete="url"
+                  placeholder={check.placeholder}
+                  required
+                  maxLength={500}
+                  className="input min-w-0"
+                />
+                <Button type="submit">{check.submit}</Button>
+              </div>
+              <p className="text-caption mt-3 max-w-[48ch] text-ink-2">{check.foot}</p>
+            </form>
+          </div>
+        </div>
       </Station>
 
       {/* 2. The loss before the click */}

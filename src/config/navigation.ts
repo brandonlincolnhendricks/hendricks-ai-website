@@ -100,6 +100,9 @@ export const footerNavigation = {
     items: built([
       ...solutionsNavigation,
       { label: 'Search Intelligence Diagnostic', href: routes.diagnostic.path },
+      /* The free instrument sits under Solutions so every route links to it
+         once, which is the sitewide internal link the check page needs. */
+      { label: 'Free AI Visibility Check', href: routes.aiVisibilityCheck.path },
     ]),
   },
   audiences: {

@@ -188,13 +188,13 @@ describe('Delivery', () => {
   })
 
   it('reports the channels that actually took the submission', () => {
-    expect(deliveryChannels({ email: 'success', crmWebhook: 'skipped', delivered: true })).toBe(
+    expect(deliveryChannels({ email: 'success', crmWebhook: 'skipped', sheet: 'skipped', delivered: true })).toBe(
       'email',
     )
-    expect(deliveryChannels({ email: 'success', crmWebhook: 'success', delivered: true })).toBe(
-      'email_crm',
+    expect(deliveryChannels({ email: 'success', crmWebhook: 'success', sheet: 'success', delivered: true })).toBe(
+      'email_crm_sheet',
     )
-    expect(deliveryChannels({ email: 'skipped', crmWebhook: 'skipped', delivered: false })).toBe(
+    expect(deliveryChannels({ email: 'skipped', crmWebhook: 'skipped', sheet: 'skipped', delivered: false })).toBe(
       'none',
     )
   })
