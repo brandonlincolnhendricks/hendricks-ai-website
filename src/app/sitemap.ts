@@ -95,6 +95,18 @@ const lastModified: Record<string, string> = {
     ? { [routes.research.path]: latestResearchArticle.updatedDate }
     : {}),
 
+  /*
+    The AI Visibility Check, published 2026-09-07, and the homepage, which
+    gained the check's station on the same day. Both were falling through to
+    the transcription fallback below and advertising 2026-08-16, which for the
+    check is three weeks before the route existed. docs/06 section 15 allows a
+    date only where the content changed materially, and both did: the route is
+    new and the homepage grew a station. The commit is the record, as it is for
+    /about above, because neither page renders a date constant to read.
+  */
+  [routes.aiVisibilityCheck.path]: '2026-09-07',
+  [routes.home.path]: '2026-09-07',
+
   // Both legal documents render their own last-updated date, so the sitemap
   // reads that field rather than keeping a second copy of it.
   [routes.terms.path]: termsOfUse.lastUpdated,
