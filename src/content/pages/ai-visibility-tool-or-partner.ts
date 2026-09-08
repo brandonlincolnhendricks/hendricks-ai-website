@@ -423,6 +423,8 @@ export const relatedSection = {
   title: 'Where to go next.',
 } as const
 
+const CHECK_LABEL = 'AI Visibility Check'
+
 export const related: readonly RelatedEntry[] = [
   {
     href: routes.selectionIntelligence.path,
@@ -433,6 +435,17 @@ export const related: readonly RelatedEntry[] = [
     href: routes.whatIsSelectionIntelligence.path,
     label: 'What Is Selection Intelligence?',
     description: 'The measures a baseline reports, defined before they are reported.',
+  },
+  /*
+    The free reading, added 2026-09-07 (CONTENT_VERIFICATION V5). A reader
+    deciding between a subscription and a capability is the reader most helped
+    by seeing one real reading first. It is a sample, never the Diagnostic, and
+    the label says check rather than audit.
+  */
+  {
+    href: routes.aiVisibilityCheck.path,
+    label: CHECK_LABEL,
+    description: 'One brand read across the observed systems, free, with its denominators.',
   },
   {
     href: routes.methodology.path,

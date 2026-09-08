@@ -492,6 +492,16 @@ export const related: readonly RelatedEntry[] = [
     label: 'The AI Selection Problem',
     description: 'What it costs a brand when the shortlist forms before the click.',
   },
+  /*
+    The free reading, added 2026-09-07 (CONTENT_VERIFICATION V5). This page
+    explains why a brand can rank first and still be absent from these
+    surfaces; the check is where a reader finds out whether theirs is.
+  */
+  {
+    href: routes.aiVisibilityCheck.path,
+    label: 'AI Visibility Check',
+    description: 'Whether one brand is named or cited on these surfaces, read in one run.',
+  },
   {
     href: routes.whatIsSearchIntelligenceEngineering.path,
     label: 'What Is Search Intelligence Engineering?',

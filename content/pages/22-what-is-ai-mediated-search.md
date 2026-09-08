@@ -183,6 +183,7 @@ This definition is maintained by Hendricks. Where the page describes systems Hen
 - What Is Generative Engine Optimization? What generative engine optimization and answer engine optimization cover, and where the framing runs out.
 - What Is Selection Intelligence? The measurement discipline applied to these surfaces.
 - The AI Selection Problem. What it costs a brand when the shortlist forms before the click.
+- AI Visibility Check. Whether one brand is named or cited on these surfaces, read in one run.
 - What Is Search Intelligence Engineering? The wider discipline this environment is measured inside.
 
 ## Final CTA

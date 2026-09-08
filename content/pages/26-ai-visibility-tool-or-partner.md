@@ -188,6 +188,8 @@ Applied in:
   What a consideration and recommendation baseline covers, produces, and reports.
 - What Is Selection Intelligence?
   The measures a baseline reports, defined before they are reported.
+- AI Visibility Check
+  One brand read across the observed systems, free, with its denominators.
 - Methodology
   Context panels, classification, weighting, evidence grades, and the stated limits.
 - What Is AI-Mediated Search?
