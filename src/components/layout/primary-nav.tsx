@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { NavLink } from '@/components/layout/nav-link'
-import { primaryNavigation } from '@/config/navigation'
+import { isCurrentRoute, primaryNavigation } from '@/config/navigation'
 
 /**
  * The masthead's six route links (canvas `_canvas.html`; decisions D-F, D-G).
@@ -99,8 +99,23 @@ export function PrimaryNav() {
         className="route-menu"
         data-open={open || undefined}
       >
+        {/*
+          Do not hide the panel on every route tap. Removing `data-open` sets
+          `display: none` in the same turn as the click, which on mobile WebKit
+          cancels the link before Next.js navigation runs. The same trap is why
+          `focusout` above ignores a null relatedTarget. Cross-route taps close
+          because `openedAt === pathname` becomes false when the route changes.
+          Same-route taps still need an explicit close: that navigation changes
+          nothing.
+        */}
         {primaryNavigation.map((item) => (
-          <NavLink key={item.href} href={item.href} onClick={close}>
+          <NavLink
+            key={item.href}
+            href={item.href}
+            onClick={() => {
+              if (isCurrentRoute(pathname, item.href)) close()
+            }}
+          >
             {item.label}
           </NavLink>
         ))}
