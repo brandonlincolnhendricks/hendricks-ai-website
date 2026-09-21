@@ -25,6 +25,7 @@ import { env } from '@/lib/env'
 export const CRM_TABS = {
   leads: 'Leads',
   visibilityChecks: 'Visibility Checks',
+  questionnaires: 'Questionnaires',
 } as const
 
 export type CrmTab = (typeof CRM_TABS)[keyof typeof CRM_TABS]
@@ -148,6 +149,150 @@ export async function appendSheetRow({
     console.error(`[crm] ${requestId} sheet append threw.`)
     return 'failed'
   }
+}
+
+/** An A1 range on one tab, quoted so a tab name with a space still parses. */
+function tabRange(tab: CrmTab, a1: string): string {
+  return encodeURIComponent(`'${tab}'!${a1}`)
+}
+
+function logUnconfigured(requestId: string, action: string): void {
+  console.error(`[crm] ${requestId} could not ${action}: the sheet is unconfigured.`)
+}
+
+export type SheetReadResult =
+  | { status: 'success'; rows: string[][] }
+  | { status: 'missing-tab' }
+  | { status: 'failed' }
+  | { status: 'skipped' }
+
+/**
+ * Reads a block of rows. The questionnaire backup is the only reader: it has
+ * to find a draft's row to update it in place, and to hand the draft back
+ * when the same link is opened on another device.
+ *
+ * Sheets answers 400 ("Unable to parse range") for a tab that does not exist
+ * yet, which is reported as `missing-tab` so the caller can create it.
+ */
+export async function readSheetRows({
+  tab,
+  a1,
+  requestId,
+}: {
+  tab: CrmTab
+  a1: string
+  requestId: string
+}): Promise<SheetReadResult> {
+  if (!sheetIsConfigured) {
+    logUnconfigured(requestId, 'read the sheet')
+    return { status: 'skipped' }
+  }
+
+  try {
+    const token = await accessToken()
+    const response = await fetch(`${SHEETS_API}/${env.CRM_SHEET_ID}/values/${tabRange(tab, a1)}`, {
+      headers: { authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    })
+
+    if (response.status === 400) return { status: 'missing-tab' }
+    if (!response.ok) {
+      console.error(`[crm] ${requestId} sheet read failed with ${response.status}.`)
+      return { status: 'failed' }
+    }
+
+    const body = (await response.json()) as { values?: unknown[][] }
+    const rows = (body.values ?? []).map((row) => row.map((cell) => String(cell ?? '')))
+    return { status: 'success', rows }
+  } catch {
+    console.error(`[crm] ${requestId} sheet read threw.`)
+    return { status: 'failed' }
+  }
+}
+
+/** Overwrites one row in place, starting at column A. `RAW` for the same reason as the append. */
+export async function updateSheetRow({
+  tab,
+  rowNumber,
+  values,
+  requestId,
+}: {
+  tab: CrmTab
+  rowNumber: number
+  values: readonly (string | number | boolean)[]
+  requestId: string
+}): Promise<SheetAppendStatus> {
+  if (!sheetIsConfigured) {
+    logUnconfigured(requestId, 'update the sheet')
+    return 'skipped'
+  }
+
+  try {
+    const token = await accessToken()
+    const url = `${SHEETS_API}/${env.CRM_SHEET_ID}/values/${tabRange(tab, `A${rowNumber}`)}?valueInputOption=RAW`
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ majorDimension: 'ROWS', values: [values] }),
+      cache: 'no-store',
+    })
+
+    if (!response.ok) {
+      console.error(`[crm] ${requestId} sheet update failed with ${response.status}.`)
+      return 'failed'
+    }
+
+    return 'success'
+  } catch {
+    console.error(`[crm] ${requestId} sheet update threw.`)
+    return 'failed'
+  }
+}
+
+/**
+ * Creates a tab with a frozen header row, so a new row shape does not depend
+ * on someone adding the tab by hand before the first write.
+ *
+ * A 400 from `addSheet` means the tab already exists, usually because a second
+ * request created it a moment earlier. That is not a failure: the header
+ * write that follows puts back the same header either way.
+ */
+export async function createSheetTab({
+  tab,
+  header,
+  requestId,
+}: {
+  tab: CrmTab
+  header: readonly string[]
+  requestId: string
+}): Promise<SheetAppendStatus> {
+  if (!sheetIsConfigured) {
+    logUnconfigured(requestId, 'create a tab')
+    return 'skipped'
+  }
+
+  try {
+    const token = await accessToken()
+    const response = await fetch(`${SHEETS_API}/${env.CRM_SHEET_ID}:batchUpdate`, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        requests: [{ addSheet: { properties: { title: tab, gridProperties: { frozenRowCount: 1 } } } }],
+      }),
+      cache: 'no-store',
+    })
+
+    if (!response.ok && response.status !== 400) {
+      console.error(`[crm] ${requestId} tab creation failed with ${response.status}.`)
+      return 'failed'
+    }
+  } catch {
+    console.error(`[crm] ${requestId} tab creation threw.`)
+    return 'failed'
+  }
+
+  return updateSheetRow({ tab, rowNumber: 1, values: header, requestId })
 }
 
 /** Test seam. */
