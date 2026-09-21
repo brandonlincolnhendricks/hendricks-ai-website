@@ -174,8 +174,37 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+      /**
+       * The client questionnaire (see `questionnaireRewrites` below) is never to
+       * be indexed. The page carries a robots meta tag as well; the header is
+       * what covers a crawler that reads headers before, or instead of, markup.
+       * It is deliberately not disallowed in robots.txt: a crawler blocked from
+       * the URL never fetches it, so it never sees the noindex, and robots.txt
+       * would also publish the path to anyone who reads it.
+       */
+      {
+        source: '/questionnaire',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
       { source: '/:path*', headers: securityHeaders },
     ]
+  },
+  /**
+   * `/questionnaire` serves Brandon Washington's discovery questionnaire
+   * (2026-09-21), a standalone page with its own styles and script, kept as a
+   * static file so it stays out of the site's component system and token
+   * checks. Its backup endpoint is `src/app/api/questionnaire/route.ts`.
+   *
+   * The file sits under `public/questionnaire/`, which `src/proxy.ts` answers
+   * with 410 for the retired `/questionnaire/[clientSlug]` pages. The proxy sees
+   * only the incoming `/questionnaire`, which it leaves alone, so the rewrite is
+   * the one way to reach the file and it has a single public URL.
+   */
+  async rewrites() {
+    return [{ source: '/questionnaire', destination: '/questionnaire/brandon-washington.html' }]
   },
   /**
    * Next matches these top to bottom.
