@@ -505,6 +505,35 @@ test.describe('KF-08 the route menu below 900 px', () => {
     await expect(nav).toBeHidden()
     await expect(toggle).toHaveAttribute('aria-expanded', 'false')
   })
+
+  test('For Brands from the panel navigates and closes it', async ({ page }) => {
+    await page.goto('/')
+
+    const toggle = page.getByRole('button', { name: 'Menu' })
+    const nav = page.getByRole('navigation', { name: 'Primary' })
+
+    await toggle.click()
+    await nav.getByRole('link', { name: 'For Brands' }).click()
+    await expect(page).toHaveURL(/\/for-brands$/)
+    await expect(nav).toBeHidden()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('the current route from the panel closes it without leaving the page', async ({
+    page,
+  }) => {
+    await page.goto('/about')
+
+    const toggle = page.getByRole('button', { name: 'Menu' })
+    const nav = page.getByRole('navigation', { name: 'Primary' })
+
+    await toggle.click()
+    await expect(nav).toBeVisible()
+    await nav.getByRole('link', { name: 'About', exact: true }).click()
+    await expect(page).toHaveURL(/\/about$/)
+    await expect(nav).toBeHidden()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  })
 })
 
 test.describe('KF-09 target size', () => {
