@@ -10,6 +10,7 @@ import {
   SubmitButton,
   SuccessRegion,
 } from '@/components/forms/form-parts'
+import { TurnstileWidget } from '@/components/forms/turnstile-widget'
 import type { LeadFormController } from '@/components/forms/use-lead-form'
 import { useFirstTouchAttribution } from '@/components/forms/use-first-touch-attribution'
 
@@ -90,6 +91,8 @@ export function LeadFormShell({
           checked={controller.valueFor('marketingOptIn') === 'on'}
         />
       </div>
+
+      <TurnstileWidget resetKey={controller.state} />
 
       <NoticeAtCollection text={copy.notice} />
 

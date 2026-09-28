@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useId, useRef, useState } from 'react'
 
 import { describedBy, Field, Honeypot, MarketingOptIn, NoticeAtCollection, SubmitButton } from '@/components/forms/form-parts'
+import { TurnstileWidget } from '@/components/forms/turnstile-widget'
 import { useFirstTouchAttribution } from '@/components/forms/use-first-touch-attribution'
 import { VisibilityCheckResults } from '@/components/visibility/visibility-check-results'
 import { check as copy } from '@/content/pages/ai-visibility-check'
@@ -263,6 +264,8 @@ export function VisibilityCheckForm({
           checked={valueFor('marketingOptIn') === 'on'}
         />
       </div>
+
+      <TurnstileWidget resetKey={state} />
 
       <NoticeAtCollection text={copy.notice} />
 
