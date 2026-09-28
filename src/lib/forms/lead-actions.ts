@@ -148,7 +148,17 @@ async function handle(
 
   const input: LeadInput = parsed.data
 
-  if (!checkAntiAbuse({ honeypot: input.honeypot, startedAt: input.startedAt }).ok) {
+  const freeText = [
+    input.role,
+    input.primaryMarket,
+    input.primaryQuestion,
+    input.currentStack,
+    input.additionalContext,
+  ]
+
+  if (
+    !checkAntiAbuse({ honeypot: input.honeypot, startedAt: input.startedAt, freeText }).ok
+  ) {
     return { status: 'error', values }
   }
 
