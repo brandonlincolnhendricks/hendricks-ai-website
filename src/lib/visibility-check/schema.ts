@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { BUSINESS_EMAIL_MESSAGE, isBusinessEmail } from '@/lib/forms/business-email'
 import { normalizeWebsite } from '@/lib/forms/lead-schema'
 
 /**
@@ -54,7 +55,8 @@ export const visibilityCheckInputSchema = z.object({
     .string()
     .trim()
     .max(254)
-    .pipe(z.email('Enter a valid email address, for example name@company.com.')),
+    .pipe(z.email('Enter a valid email address, for example name@company.com.'))
+    .refine(isBusinessEmail, { error: BUSINESS_EMAIL_MESSAGE }),
   marketingOptIn: z.boolean().default(false),
   honeypot: z.string().max(0),
   startedAt: z.number().int().positive(),

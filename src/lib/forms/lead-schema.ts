@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { BUSINESS_EMAIL_MESSAGE, isBusinessEmail } from '@/lib/forms/business-email'
+
 import {
   type ContactAudience,
   contactAudienceValues,
@@ -104,7 +106,8 @@ const common = {
     .string()
     .trim()
     .max(254)
-    .pipe(z.email('Enter a valid work email address, for example name@company.com.')),
+    .pipe(z.email('Enter a valid work email address, for example name@company.com.'))
+    .refine(isBusinessEmail, { error: BUSINESS_EMAIL_MESSAGE }),
   primaryQuestion: primaryQuestion(
     'Describe the question in at least a sentence so Hendricks can review it.',
   ),
