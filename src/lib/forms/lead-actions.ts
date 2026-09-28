@@ -20,6 +20,7 @@ import {
   type LeadInput,
 } from '@/lib/forms/lead-schema'
 import { checkRateLimit, identifierFromHeaders } from '@/lib/forms/rate-limit'
+import { verifyTurnstileToken } from '@/lib/forms/turnstile'
 
 /**
  * The one submission path behind the three lead forms (15 sections 4 to 6).
@@ -38,7 +39,7 @@ import { checkRateLimit, identifierFromHeaders } from '@/lib/forms/rate-limit'
  */
 
 /** Never echoed back into the rendered form. */
-const NOT_ECHOED = new Set(['honeypot', 'startedAt', 'attribution'])
+const NOT_ECHOED = new Set(['honeypot', 'startedAt', 'attribution', 'cf-turnstile-response'])
 
 function readValues(formData: FormData): Record<string, string> {
   const values: Record<string, string> = {}
@@ -159,6 +160,12 @@ async function handle(
   if (
     !checkAntiAbuse({ honeypot: input.honeypot, startedAt: input.startedAt, freeText }).ok
   ) {
+    return { status: 'error', values }
+  }
+
+  // Last of the bot checks because it is the only one that makes a network
+  // call. Passes when Turnstile is not configured.
+  if (!(await verifyTurnstileToken(optional(formData, 'cf-turnstile-response')))) {
     return { status: 'error', values }
   }
 

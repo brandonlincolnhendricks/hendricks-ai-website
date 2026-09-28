@@ -7,6 +7,7 @@ import { buildAttribution } from '@/lib/forms/attribution'
 import { IDEMPOTENCY_WINDOW_SECONDS } from '@/lib/forms/limits'
 import { hashIdentifier, identifierFromHeaders } from '@/lib/forms/rate-limit'
 import { withSharedStore } from '@/lib/forms/shared-store'
+import { verifyTurnstileToken } from '@/lib/forms/turnstile'
 import { deliverCheck } from '@/lib/visibility-check/delivery'
 import { engineIsConfigured } from '@/lib/visibility-check/engines'
 import { checkAllowance } from '@/lib/visibility-check/limits'
@@ -28,7 +29,7 @@ import type { VisibilityCheckState } from '@/lib/visibility-check/state'
  * before the run, so a double submit cannot buy the same twenty probes twice.
  */
 
-const NOT_ECHOED = new Set(['honeypot', 'startedAt', 'attribution'])
+const NOT_ECHOED = new Set(['honeypot', 'startedAt', 'attribution', 'cf-turnstile-response'])
 
 function readValues(formData: FormData): Record<string, string> {
   const values: Record<string, string> = {}
@@ -88,6 +89,12 @@ export async function submitVisibilityCheck(
   if (
     !checkAntiAbuse({ honeypot: input.honeypot, startedAt: input.startedAt, freeText }).ok
   ) {
+    return { status: 'error', values }
+  }
+
+  // Before the allowance so a bot cannot spend a real visitor's bucket, and
+  // well before the run, which is the part that costs money.
+  if (!(await verifyTurnstileToken(text(formData, 'cf-turnstile-response') || undefined))) {
     return { status: 'error', values }
   }
 
