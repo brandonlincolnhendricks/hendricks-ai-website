@@ -1,14 +1,21 @@
 import { describe, expect, it } from 'vitest'
 
 import { siteConfig } from '@/config/site'
-import { organizationSchema, personAuthor, personSchema } from '@/lib/seo/json-ld'
+import { externalVenture } from '@/content/pages/about'
+import {
+  foundedOrganizationSchema,
+  organizationSchema,
+  personAuthor,
+  personSchema,
+} from '@/lib/seo/json-ld'
 
 const COMPANY_LINKEDIN = 'https://www.linkedin.com/company/hendricksai'
+const PERSONAL_SITE = 'https://brandonlincolnhendricks.com'
 const PERSONAL_LINKEDIN = 'https://www.linkedin.com/in/brandonlincolnhendricks'
 const SEARCH_ECONOMY = 'https://thesearcheconomy.com'
-const MEDIUM =
-  'https://medium.com/@brandonlincolnhendricks/what-is-a-search-intelligence-engineer-f6211b8339a6'
 const X_PROFILE = 'https://x.com/brandonlincolnh'
+const GITHUB = 'https://github.com/brandonlincolnhendricks'
+const MEDIUM = 'https://medium.com/@brandonlincolnhendricks'
 
 function asList(value: unknown): string[] {
   if (Array.isArray(value)) return value.filter((item): item is string => typeof item === 'string')
@@ -36,11 +43,19 @@ describe('Person and Organization sameAs locks', () => {
   })
 
   it('puts the Person join list on Person only', () => {
-    expect(personSameAs).toEqual([MEDIUM, SEARCH_ECONOMY, PERSONAL_LINKEDIN, X_PROFILE])
+    expect(personSameAs).toEqual([PERSONAL_SITE, PERSONAL_LINKEDIN, X_PROFILE, GITHUB, MEDIUM])
+    expect(orgSameAs).not.toContain(PERSONAL_SITE)
     expect(orgSameAs).not.toContain(PERSONAL_LINKEDIN)
-    expect(orgSameAs).not.toContain(SEARCH_ECONOMY)
     expect(orgSameAs).not.toContain(X_PROFILE)
+    expect(orgSameAs).not.toContain(GITHUB)
     expect(orgSameAs).not.toContain(MEDIUM)
+  })
+
+  it('lists only profiles of Brandon himself, never an article or a publication', () => {
+    for (const url of personSameAs) {
+      expect(new URL(url).pathname.split('/').filter(Boolean).length).toBeLessThanOrEqual(2)
+    }
+    expect(personSameAs).not.toContain(SEARCH_ECONOMY)
   })
 
   it('fails if Person and Organization LinkedIn URLs are swapped', () => {
@@ -50,9 +65,18 @@ describe('Person and Organization sameAs locks', () => {
     expect(personSameAs).not.toContain(COMPANY_LINKEDIN)
   })
 
-  it('keeps The Search Economy off Organization and on Person', () => {
-    expect(personSameAs).toContain(SEARCH_ECONOMY)
+  it('declares The Search Economy as an organization Brandon founded', () => {
+    const publication = foundedOrganizationSchema({
+      name: externalVenture.name,
+      url: externalVenture.cta.href,
+      type: 'NewsMediaOrganization',
+    })
+    expect(publication['@type']).toBe('NewsMediaOrganization')
+    expect(publication['@id']).toBe(`${SEARCH_ECONOMY}/#organization`)
+    expect(publication.url).toBe(SEARCH_ECONOMY)
+    expect(publication.founder).toEqual({ '@id': siteConfig.founderPersonId })
     expect(orgSameAs).not.toContain(SEARCH_ECONOMY)
+    expect(personSameAs).not.toContain(SEARCH_ECONOMY)
   })
 
   it('points the Person node at /about#person', () => {

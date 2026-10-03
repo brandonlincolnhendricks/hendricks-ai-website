@@ -21,8 +21,9 @@ export function serializeJsonLd(data: unknown): string {
  * Organization node.
  *
  * Founding date, address, and contact point stay omitted until verified.
- * sameAs is the company LinkedIn URL only. The Search Economy is not an
- * Organization profile and must not appear here.
+ * sameAs is the company LinkedIn URL only. The Search Economy is a separate
+ * organization Brandon founded (see `foundedOrganizationSchema`), not a
+ * Hendricks profile, so it never appears here.
  */
 export function organizationSchema() {
   return {
@@ -272,8 +273,8 @@ export type AlumniRole = {
  * Person node for the founder, emitted on /about only.
  *
  * `@id` is https://hendricks.ai/about#person. sameAs is the Person-level join
- * list: Medium essay, The Search Economy, personal LinkedIn, and X.
- * Company LinkedIn stays off this node.
+ * list in `siteConfig.personSameAs`: the personal site, personal LinkedIn, X,
+ * GitHub, and Medium. Company LinkedIn stays off this node.
  */
 export function personSchema({
   jobTitle,
@@ -309,6 +310,33 @@ export function personSchema({
           })),
         }
       : {}),
+  }
+}
+
+/**
+ * Organization the founder started outside Hendricks, emitted on /about only.
+ *
+ * Declares the founding relationship the biography states in visible copy,
+ * which is the accurate join: sameAs would claim the publication's homepage
+ * identifies Brandon himself. The `@id` is the same IRI the publication's own
+ * site uses for its organization node, so both sites describe one entity.
+ * Name and URL come from the About content object rather than literals.
+ */
+export function foundedOrganizationSchema({
+  name,
+  url,
+  type = 'Organization',
+}: {
+  name: string
+  url: string
+  type?: 'Organization' | 'NewsMediaOrganization'
+}) {
+  return {
+    '@type': type,
+    '@id': new URL('/#organization', url).toString(),
+    name,
+    url,
+    founder: { '@id': siteConfig.founderPersonId },
   }
 }
 

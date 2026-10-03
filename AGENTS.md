@@ -14,15 +14,12 @@ Build a premium, evidence-led B2B website for **Hendricks**, a Search Intelligen
 
 Do not rename these without explicit approval.
 
-## Important brand separation
+## The Search Economy
 
-The Search Economy is a standalone publication at `https://thesearcheconomy.com`.
+The Search Economy is a daily publication at `https://thesearcheconomy.com`, founded by Brandon Lincoln Hendricks. Brandon confirmed on 2026-10-03 that it does not have to be kept separate from Hendricks and can be linked to it.
 
-- Do not include it in Hendricks Solutions.
-- Do not call it the research arm of Hendricks.
-- Do not create a Hendricks route for it.
-- Do not include it in the primary navigation or commercial conversion flow.
-- It may appear only on the Hendricks About page in Brandon Lincoln Hendricks's biography as an independent publication he also founded.
+- Today it appears on the About page biography and in the About page structured data, as a `NewsMediaOrganization` with `founder` pointing at the Person node. It is not a `sameAs` target, because `sameAs` asserts the URL identifies Brandon himself.
+- Wider placement (homepage, primary navigation, footer, Solutions, the conversion flow) is not decided yet. Confirm with Brandon first, then update the guards that still limit it to /about: `scripts/validate-content.ts`, `tests/unit/content.test.ts`, `tests/unit/page-content.test.ts`, `tests/e2e/homepage.spec.ts`, and `tests/e2e/routes.spec.ts`.
 
 ## Technical rules
 
