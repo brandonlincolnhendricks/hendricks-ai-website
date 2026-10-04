@@ -8,7 +8,7 @@ import * as wiams from '@/content/pages/what-is-ai-mediated-search'
 import * as wgeo from '@/content/pages/what-is-generative-engine-optimization'
 import * as wisie from '@/content/pages/what-is-search-intelligence-engineering'
 import * as wisi from '@/content/pages/what-is-selection-intelligence'
-import { definedTermSchema } from '@/lib/seo/json-ld'
+import { definedTermSchema, webPageSchema } from '@/lib/seo/json-ld'
 
 const VENDOR_FRAGMENTS = ['ForSEO', 'optimization api']
 
@@ -76,14 +76,26 @@ describe('citation craft on definition pages', () => {
     expect(methodology.related[0].description.toLowerCase()).not.toContain('ask for by id')
   })
 
-  it('points DefinedTerm sameAs at the supporting study URLs', () => {
-    const sie = definedTermSchema({
+  it('attaches supporting studies to the WebPage rather than treating them as the term', () => {
+    const studyUrl = new URL(
+      routes.researchHendricksSelectionBaseline.path,
+      siteConfig.url,
+    ).toString()
+    const page = webPageSchema({
+      path: routes.whatIsSearchIntelligenceEngineering.path,
+      title: wisie.meta.title,
+      description: wisie.meta.description,
+      citation: [studyUrl],
+    })
+    const term = definedTermSchema({
       path: routes.whatIsSearchIntelligenceEngineering.path,
       term: wisie.directAnswer.term,
       directAnswer: wisie.directAnswer.answer,
-      sameAs: new URL(routes.researchHendricksSelectionBaseline.path, siteConfig.url).toString(),
     })
-    expect(sie.sameAs).toBe('https://hendricks.ai/research/hendricks-selection-baseline')
+
+    expect(page.citation).toEqual([studyUrl])
+    expect(term).not.toHaveProperty('sameAs')
+    expect(term).not.toHaveProperty('citation')
   })
 
   it('keeps vendor product names out of the new copy', () => {

@@ -26,6 +26,16 @@ type BuildMetadataInput = {
   maxImagePreview?: boolean
 }
 
+type BuildResearchCitationMetadataInput = {
+  title: string
+  author: string
+  publicationDate: string
+  /** Canonical research route, beginning with a slash. */
+  path: string
+  /** Optional first-party PDF rendition, beginning with a slash. */
+  pdfPath?: string
+}
+
 /**
  * Build-time pin for the indexation switch.
  *
@@ -129,5 +139,36 @@ export function buildMetadata({
       description,
       ...(ogImage ? { images: [ogImage] } : {}),
     },
+  }
+}
+
+/**
+ * Highwire citation tags for the public research detail pages.
+ *
+ * Google Scholar reads these tags as bibliographic metadata. The research page
+ * remains the canonical full-text source, while `citation_pdf_url` is included
+ * only when the study actually publishes a first-party PDF rendition.
+ * Dataset DOIs do not belong here: they identify the archived data release,
+ * not the research article described by these tags. Technical-report fields
+ * are omitted because these pages do not publish a genuine report number; an
+ * institution without its paired report number would misclassify the work.
+ */
+export function buildResearchCitationMetadata({
+  title,
+  author,
+  publicationDate,
+  path,
+  pdfPath,
+}: BuildResearchCitationMetadataInput): NonNullable<Metadata['other']> {
+  return {
+    citation_title: title,
+    citation_author: author,
+    citation_publication_date: publicationDate,
+    citation_online_date: publicationDate,
+    citation_language: 'en',
+    citation_fulltext_html_url: new URL(path, siteConfig.url).toString(),
+    ...(pdfPath
+      ? { citation_pdf_url: new URL(pdfPath, siteConfig.url).toString() }
+      : {}),
   }
 }

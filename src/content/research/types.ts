@@ -142,6 +142,12 @@ export type ResearchCitation = {
 export type ResearchDataset = {
   name: string
   description: string
+  /** Public release version carried by both the page and the Dataset node. */
+  version: string
+  /** Discovery terms published with the archived release. */
+  keywords: readonly string[]
+  /** True only when the complete release is publicly downloadable. */
+  isAccessibleForFree: boolean
   /** The version DOI: the identifier for this release, not for the series. */
   doi: { label: string; href: string }
   /** The concept DOI, which always resolves to the latest release. */

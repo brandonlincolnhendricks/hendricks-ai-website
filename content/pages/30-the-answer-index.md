@@ -198,6 +198,12 @@ This page is the canonical version of the study. These are the same figures in f
 - Download the data package (ZIP, 19 files): /research/the-answer-index/the-answer-index-2026-09-v2026.09.1.zip. 333 KB. The full 480-question panel, one row per citation event, every domain's classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests. md5 9a0a18ef97e7dcafe41e07c2ce19d804, matching the Zenodo copy exactly.
 - Cite the dataset at its DOI: https://doi.org/10.5281/zenodo.22242103. The permanent identifier for this data release. DOI 10.5281/zenodo.22242102 always resolves to the latest version.
 
+Dataset version: v2026.09.1.
+
+Dataset keywords: AI-mediated search, Search Intelligence Engineering, Selection Intelligence, agentic search, AI retrieval, source selection.
+
+Access: Open access.
+
 ## Errors found
 
 ### A classifier that failed its audit, a vendor payload with a known defect, and forty findings that did not survive

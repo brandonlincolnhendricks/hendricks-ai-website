@@ -406,6 +406,8 @@ export const series = {
     cadence: 'Cadence',
     dataDoi: 'Data DOI',
     latestVersion: 'Latest version',
+    keywords: 'Dataset keywords',
+    access: 'Access',
     relatedSolution: 'Related solution',
   },
   dataDoi: {
@@ -471,6 +473,16 @@ export const dataset: ResearchDataset = {
   name: 'The Answer Index, Edition 1, September 2026',
   description:
     'The full 480-question panel from run-2026-09-01T022903Z: one row per citation event, the complete panel, every domain classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests.',
+  version: series.packageVersion,
+  keywords: [
+    'AI-mediated search',
+    'Search Intelligence Engineering',
+    'Selection Intelligence',
+    'agentic search',
+    'AI retrieval',
+    'source selection',
+  ],
+  isAccessibleForFree: true,
   doi: {
     label: '10.5281/zenodo.22242103',
     href: 'https://doi.org/10.5281/zenodo.22242103',

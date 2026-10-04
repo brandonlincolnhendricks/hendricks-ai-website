@@ -327,7 +327,10 @@ test.describe('Wide tables', () => {
   const tableRoutes = [
     { path: '/solutions/search-impact-measurement', caption: sim.evidenceGrades.caption },
     { path: '/methodology', caption: methodology.evidenceGrades.caption },
-    { path: '/what-is-search-intelligence-engineering', caption: wisie.whyItExists.caption },
+    {
+      path: '/what-is-search-intelligence-engineering',
+      caption: wisie.foundationalAndExpert.caption,
+    },
     // Two tables on this route. The surfaces table renders first and is the one
     // that carries the observed-scope column, so it is the one pinned here; the
     // caption test below still iterates both.

@@ -36,7 +36,7 @@ import {
   jsonLdGraph,
   webPageSchema,
 } from '@/lib/seo/json-ld'
-import { buildMetadata } from '@/lib/seo/metadata'
+import { buildMetadata, buildResearchCitationMetadata } from '@/lib/seo/metadata'
 import { formatLongDate } from '@/lib/utils/format-date'
 
 /**
@@ -74,12 +74,25 @@ export async function generateMetadata({
   const article = findResearchArticle(slug)
   if (!article) return {}
 
-  return buildMetadata({
-    title: article.content.meta.title,
-    description: article.content.meta.description,
-    path: article.path,
-    maxImagePreview: true,
-  })
+  const pdfPath = article.content.downloads?.items.find(({ cta }) =>
+    cta.href.endsWith('.pdf'),
+  )?.cta.href
+
+  return {
+    ...buildMetadata({
+      title: article.content.meta.title,
+      description: article.content.meta.description,
+      path: article.path,
+      maxImagePreview: true,
+    }),
+    other: buildResearchCitationMetadata({
+      title: article.title,
+      author: article.content.byline.author,
+      publicationDate: article.publishedDate,
+      path: article.path,
+      ...(pdfPath ? { pdfPath } : {}),
+    }),
+  }
 }
 
 /**
@@ -207,6 +220,9 @@ export default async function ResearchArticlePage({
                   path: article.path,
                   name: content.dataset.name,
                   description: content.dataset.description,
+                  version: content.dataset.version,
+                  keywords: content.dataset.keywords,
+                  isAccessibleForFree: content.dataset.isAccessibleForFree,
                   doi: content.dataset.doi,
                   license: content.dataset.license,
                   temporalCoverage: content.dataset.temporalCoverage,
@@ -621,6 +637,18 @@ export default async function ResearchArticlePage({
                     <dt>{series.labels.cadence}</dt>
                     <dd>{series.cadence}</dd>
                   </div>
+                  {content.dataset ? (
+                    <>
+                      <div className="pubrec-row">
+                        <dt>{series.labels.keywords}</dt>
+                        <dd>{content.dataset.keywords.join(', ')}</dd>
+                      </div>
+                      <div className="pubrec-row">
+                        <dt>{series.labels.access}</dt>
+                        <dd>{content.dataset.isAccessibleForFree ? 'Open access' : 'Restricted'}</dd>
+                      </div>
+                    </>
+                  ) : null}
                 </>
               ) : null}
               <div className="pubrec-row">

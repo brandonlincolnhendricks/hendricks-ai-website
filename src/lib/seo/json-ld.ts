@@ -113,6 +113,9 @@ export function websiteSchema() {
  * `datePublished` and `dateModified` are optional and must be passed ONLY for
  * pages carrying a visible date a reader can check. Stamping the rest with a
  * build date asserts a review that nobody performed.
+ *
+ * Supporting studies belong on this WebPage through `citation`. They are works
+ * the page cites, not alternate identities for the DefinedTerm it describes.
  */
 export function webPageSchema({
   path,
@@ -126,6 +129,7 @@ export function webPageSchema({
   datePublished,
   dateModified,
   author,
+  citation,
 }: {
   path: string
   title: string
@@ -146,10 +150,17 @@ export function webPageSchema({
   dateModified?: string
   /** Expanded Person author. sameAs stays on /about#person only. */
   author?: ReturnType<typeof personAuthor>
+  /** Visible supporting works cited by this CreativeWork. */
+  citation?: string | readonly string[]
 }) {
   const url = new URL(path, siteConfig.url).toString()
   const aboutNode = about === undefined ? { '@id': `${siteConfig.url}/#organization` } : about
   const subject = mainEntity ?? (mainEntityFragment ? { '@id': `${url}#${mainEntityFragment}` } : undefined)
+  const citations = citation
+    ? typeof citation === 'string'
+      ? citation
+      : [...citation]
+    : undefined
 
   return {
     '@type': type,
@@ -164,6 +175,7 @@ export function webPageSchema({
     ...(datePublished ? { datePublished } : {}),
     ...(dateModified ? { dateModified } : {}),
     ...(author ? { author } : {}),
+    ...(citations ? { citation: citations } : {}),
     inLanguage: 'en-US',
   }
 }
@@ -274,7 +286,9 @@ export type AlumniRole = {
  *
  * `@id` is https://hendricks.ai/about#person. sameAs is the Person-level join
  * list in `siteConfig.personSameAs`: the personal site, personal LinkedIn, X,
- * GitHub, and Medium. Company LinkedIn stays off this node.
+ * GitHub, Medium, and ORCID. Company LinkedIn stays off this node. Authored
+ * datasets connect to this Person through Dataset.creator; they are neither
+ * alternate identities nor works about Brandon.
  */
 export function personSchema({
   jobTitle,
@@ -349,25 +363,21 @@ export function foundedOrganizationSchema({
  *
  * The terms are grouped into one `DefinedTermSet` so the vocabulary reads as a
  * deliberate set rather than four unrelated pages.
+ *
+ * A DefinedTerm intentionally carries neither `sameAs` nor `citation`. A study
+ * can support the page that defines a term without being the same entity as the
+ * term, and WebPage is the CreativeWork that performs the citation.
  */
 export function definedTermSchema({
   path,
   term,
   directAnswer,
-  sameAs,
-  citation,
 }: {
   path: string
   term: string
   directAnswer: string
-  /** Study URL this definition is supported by. */
-  sameAs?: string | readonly string[]
-  /** Study URL cited as supporting evidence, where the type allows it. */
-  citation?: string | readonly string[]
 }) {
   const url = new URL(path, siteConfig.url).toString()
-  const asList = (value: string | readonly string[]) =>
-    typeof value === 'string' ? value : [...value]
   return {
     '@type': 'DefinedTerm',
     '@id': `${url}#term`,
@@ -378,8 +388,6 @@ export function definedTermSchema({
     // so the vocabulary resolves to a single node that actually lists members
     // rather than to an inline stub repeated on each page with none.
     inDefinedTermSet: { '@id': `${siteConfig.url}/#vocabulary` },
-    ...(sameAs ? { sameAs: asList(sameAs) } : {}),
-    ...(citation ? { citation: asList(citation) } : {}),
   }
 }
 
@@ -521,6 +529,9 @@ export function datasetSchema({
   path,
   name,
   description,
+  version,
+  keywords,
+  isAccessibleForFree,
   doi,
   license,
   temporalCoverage,
@@ -530,6 +541,9 @@ export function datasetSchema({
   path: string
   name: string
   description: string
+  version: string
+  keywords: readonly string[]
+  isAccessibleForFree: boolean
   doi: { label: string; href: string }
   license: { name: string; href: string }
   temporalCoverage: string
@@ -547,6 +561,9 @@ export function datasetSchema({
     '@id': `${url}#dataset`,
     name,
     description,
+    version,
+    keywords: [...keywords],
+    isAccessibleForFree,
     identifier: doi.href,
     sameAs: doi.href,
     url,

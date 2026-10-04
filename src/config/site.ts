@@ -36,8 +36,8 @@ export const siteConfig = {
   /**
    * Person sameAs on /about#person only. Profiles that identify Brandon
    * himself: the personal site that is his entity home (its Person node lists
-   * /about back, so the two nodes join), personal LinkedIn, X, GitHub, and the
-   * Medium profile. Company LinkedIn stays off this list.
+   * /about back, so the two nodes join), ORCID, personal LinkedIn, X, GitHub,
+   * and the Medium profile. Company LinkedIn stays off this list.
    *
    * Publications and articles are not sameAs targets, because sameAs asserts
    * the URL identifies the same entity. The Search Economy is declared instead
@@ -45,8 +45,9 @@ export const siteConfig = {
    */
   personSameAs: [
     'https://brandonlincolnhendricks.com',
+    'https://orcid.org/0009-0001-5728-0790',
     'https://www.linkedin.com/in/brandonlincolnhendricks',
-    'https://x.com/brandonlincolnh',
+    'https://x.com/BrandonLincolnH',
     'https://github.com/brandonlincolnhendricks',
     'https://medium.com/@brandonlincolnhendricks',
   ] as const,

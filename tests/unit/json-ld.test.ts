@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest'
 
 import {
   breadcrumbSchema,
+  datasetSchema,
   definedTermSchema,
+  definedTermSetSchema,
   jsonLdGraph,
   organizationSchema,
   personSchema,
@@ -15,6 +17,8 @@ import { routes } from '@/config/routes'
 import { siteConfig } from '@/config/site'
 import { termsOfUse } from '@/content/legal/terms'
 import { experience } from '@/content/pages/about'
+import { DEFINED_TERM_MEMBERS } from '@/content/shared/definition-routes'
+import { dataset as answerIndexDataset } from '@/content/research/the-answer-index'
 import * as sdi from '@/content/pages/search-demand-intelligence'
 import * as sim from '@/content/pages/search-impact-measurement'
 import * as spe from '@/content/pages/search-presence-engineering'
@@ -241,6 +245,8 @@ describe('definedTermSchema', () => {
     expect(schema.name).toBe('Selection Intelligence')
     expect(schema.description).toBe(wisi.directAnswer.answer)
     expect(schema.url).toBe('https://hendricks.ai/what-is-selection-intelligence')
+    expect(schema).not.toHaveProperty('sameAs')
+    expect(schema).not.toHaveProperty('citation')
   })
 
   it('groups every term into one shared vocabulary set', () => {
@@ -250,6 +256,39 @@ describe('definedTermSchema', () => {
     expect(a['@id']).not.toBe(b['@id'])
     expect(a.inDefinedTermSet['@id']).toBe(b.inDefinedTermSet['@id'])
   })
+
+  it('lists every live term that references the shared vocabulary', () => {
+    const set = definedTermSetSchema(DEFINED_TERM_MEMBERS)
+
+    expect(set.hasDefinedTerm).toEqual(
+      DEFINED_TERM_MEMBERS.map(({ name, path }) => {
+        const url = new URL(path, siteConfig.url).toString()
+        return {
+          '@type': 'DefinedTerm',
+          '@id': `${url}#term`,
+          name,
+          url,
+        }
+      }),
+    )
+  })
+})
+
+describe('webPageSchema citations', () => {
+  it('places visible supporting works on the WebPage CreativeWork', () => {
+    const citations = [
+      'https://hendricks.ai/research/hendricks-selection-baseline',
+      'https://hendricks.ai/research/the-answer-index',
+    ]
+    const schema = webPageSchema({
+      path: routes.whatIsSearchIntelligenceEngineering.path,
+      title: 'What Is Search Intelligence Engineering?',
+      description: 'A visible definition.',
+      citation: citations,
+    })
+
+    expect(schema.citation).toEqual(citations)
+  })
 })
 
 describe('jsonLdGraph', () => {
@@ -258,6 +297,32 @@ describe('jsonLdGraph', () => {
 
     expect(graph['@context']).toBe('https://schema.org')
     expect(graph['@graph']).toHaveLength(2)
+  })
+})
+
+describe('datasetSchema', () => {
+  const schema = datasetSchema({
+    path: routes.researchTheAnswerIndex.path,
+    name: answerIndexDataset.name,
+    description: answerIndexDataset.description,
+    version: answerIndexDataset.version,
+    keywords: answerIndexDataset.keywords,
+    isAccessibleForFree: answerIndexDataset.isAccessibleForFree,
+    doi: answerIndexDataset.doi,
+    license: answerIndexDataset.license,
+    temporalCoverage: answerIndexDataset.temporalCoverage,
+    variableMeasured: answerIndexDataset.variableMeasured,
+    distribution: answerIndexDataset.distribution,
+  })
+
+  it('publishes the archived release version, keywords, and access state', () => {
+    expect(schema.version).toBe('v2026.09.1')
+    expect(schema.keywords).toEqual(answerIndexDataset.keywords)
+    expect(schema.isAccessibleForFree).toBe(true)
+  })
+
+  it('attributes the release to the canonical Person node', () => {
+    expect(schema.creator).toEqual({ '@id': siteConfig.founderPersonId })
   })
 })
 

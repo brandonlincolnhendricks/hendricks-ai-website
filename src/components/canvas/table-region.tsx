@@ -53,7 +53,7 @@ export function TableRegion({
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr key={columns[0] ? String(row[columns[0].key]) : rowIndex}>
+            <tr key={rowIndex}>
               {columns.map((column) =>
                 column.rowHeader ? (
                   <th key={column.key} scope="row">

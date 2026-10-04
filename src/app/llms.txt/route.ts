@@ -104,7 +104,7 @@ function absenceSection(): string {
     '',
     '- Client names or logos',
     '- Testimonials',
-    '- Case studies, published results, or performance metrics',
+    '- Client case studies, client performance results, or client performance metrics',
     '- Published fees',
     '',
     'Figures shown inside an interface visual are sample data. A page that shows them carries the label "Illustrative interface. Not a client result." once as a legend.',

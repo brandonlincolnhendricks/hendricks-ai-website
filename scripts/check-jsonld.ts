@@ -120,6 +120,22 @@ function checkDatasetNode(node: Record<string, unknown>, where: string, failures
     })
   }
 
+  if (isDoi) {
+    if (typeof node['version'] !== 'string' || node['version'].length === 0) {
+      failures.push({ where, message: 'DOI Dataset must carry a release version' })
+    }
+    if (!Array.isArray(node['keywords']) || node['keywords'].length === 0) {
+      failures.push({ where, message: 'DOI Dataset must carry at least one keyword' })
+    }
+    if (node['isAccessibleForFree'] !== true) {
+      failures.push({ where, message: 'Open DOI Dataset must declare isAccessibleForFree true' })
+    }
+    const creator = node['creator'] as Record<string, unknown> | undefined
+    if (creator?.['@id'] !== siteConfig.founderPersonId) {
+      failures.push({ where, message: 'DOI Dataset creator must reference founderPersonId' })
+    }
+  }
+
   if (isRunId) {
     if (node['measurementTechnique'] !== CITATION_PROBE_MEASUREMENT_TECHNIQUE) {
       failures.push({
@@ -193,6 +209,9 @@ function buildResearchGraphs(): { path: string; graph: unknown[] }[] {
           path: article.path,
           name: ds.name,
           description: ds.description,
+          version: ds.version,
+          keywords: ds.keywords,
+          isAccessibleForFree: ds.isAccessibleForFree,
           doi: ds.doi,
           license: ds.license,
           temporalCoverage: ds.temporalCoverage,

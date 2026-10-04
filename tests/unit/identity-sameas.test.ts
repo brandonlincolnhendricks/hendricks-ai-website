@@ -11,11 +11,13 @@ import {
 
 const COMPANY_LINKEDIN = 'https://www.linkedin.com/company/hendricksai'
 const PERSONAL_SITE = 'https://brandonlincolnhendricks.com'
+const ORCID = 'https://orcid.org/0009-0001-5728-0790'
 const PERSONAL_LINKEDIN = 'https://www.linkedin.com/in/brandonlincolnhendricks'
 const SEARCH_ECONOMY = 'https://thesearcheconomy.com'
-const X_PROFILE = 'https://x.com/brandonlincolnh'
+const X_PROFILE = 'https://x.com/BrandonLincolnH'
 const GITHUB = 'https://github.com/brandonlincolnhendricks'
 const MEDIUM = 'https://medium.com/@brandonlincolnhendricks'
+const ZENODO_RECORD = 'https://zenodo.org/records/22242103'
 
 function asList(value: unknown): string[] {
   if (Array.isArray(value)) return value.filter((item): item is string => typeof item === 'string')
@@ -43,8 +45,16 @@ describe('Person and Organization sameAs locks', () => {
   })
 
   it('puts the Person join list on Person only', () => {
-    expect(personSameAs).toEqual([PERSONAL_SITE, PERSONAL_LINKEDIN, X_PROFILE, GITHUB, MEDIUM])
+    expect(personSameAs).toEqual([
+      PERSONAL_SITE,
+      ORCID,
+      PERSONAL_LINKEDIN,
+      X_PROFILE,
+      GITHUB,
+      MEDIUM,
+    ])
     expect(orgSameAs).not.toContain(PERSONAL_SITE)
+    expect(orgSameAs).not.toContain(ORCID)
     expect(orgSameAs).not.toContain(PERSONAL_LINKEDIN)
     expect(orgSameAs).not.toContain(X_PROFILE)
     expect(orgSameAs).not.toContain(GITHUB)
@@ -56,6 +66,12 @@ describe('Person and Organization sameAs locks', () => {
       expect(new URL(url).pathname.split('/').filter(Boolean).length).toBeLessThanOrEqual(2)
     }
     expect(personSameAs).not.toContain(SEARCH_ECONOMY)
+    expect(personSameAs).not.toContain(ZENODO_RECORD)
+  })
+
+  it('keeps the authored Zenodo dataset off Person identity and subject relationships', () => {
+    expect(person).not.toHaveProperty('subjectOf')
+    expect(personSameAs).not.toContain(ZENODO_RECORD)
   })
 
   it('fails if Person and Organization LinkedIn URLs are swapped', () => {
