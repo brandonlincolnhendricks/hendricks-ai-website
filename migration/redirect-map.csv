@@ -19,7 +19,133 @@ old_url,new_url,redirect_type,rationale,backlink_priority,search_traffic_priorit
 /dashboard/knowledge,,410,Authenticated or internal route; not public; 410 Gone via src/proxy.ts,none,none,passed
 /dashboard/proposals,,410,Authenticated or internal route; not public; 410 Gone via src/proxy.ts,none,none,passed
 /diagnostic,/diagnostic,308,Retain URL; rewrite to Search Intelligence Diagnostic,unknown,unknown,pending
-/glossary/multi-engine-visibility-index,,410,Retired glossary entry; the /glossary parent redirects but matches exactly and never its children; 410 Gone via src/proxy.ts,unknown,unknown,passed
+/glossary,/what-is-search-intelligence-engineering,308,Retired glossary hub now has one canonical category definition; preserve inbound authority with one permanent hop,unknown,unknown,passed
+/glossary/ai-answer-engineering,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-answer-formats,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-brand-authority,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-entity-sculpting,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-first-content,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-mode-coverage,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-overview-presence,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-query-variant-set,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/ai-search-driven-pipeline,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-search-equity,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-search-market-share-shifts,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/ai-search-visibility,/what-is-ai-mediated-search#vocabulary,308,The live AI-mediated search page explicitly owns and publishes the corrected AI search visibility definition,unknown,high,passed
+/glossary/ai-visibility-roi,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/answer-diversity-vs-consistency,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/answer-level-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/answer-reinforcement-loop,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/answer-share,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/answer-slot-positioning,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/attention-decay,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/attention-mechanism-exploitation,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/attribution-magnet,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/authority-compounding-strategy,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/brand-entity-coherence,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/canonical-definition-page,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/category-definition-ownership,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-cascade,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-clustering,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-consistency-score,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/citation-display-patterns,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-fragility,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-log,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-momentum,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-position-weighting,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-prioritization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-recency-bias,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-share,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/citation-velocity,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/co-citation-networks,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/comparison-framework-content,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/competitive-visibility-gap,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/competitor-citation-delta,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/competitor-differentiation-blocks,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/competitor-visibility-scan,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/content-first-visibility,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/context-collapse,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/context-window-fit,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/conversational-context-persistence,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/conversational-intent-blocks,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/conversational-search-behavior,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/conversational-search-path,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/conversational-summaries,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/cross-engine-reinforcement,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/data-backed-content,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/domain-authority-memory,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/embedding-space-positioning,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/engine-coverage,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-authority-signals,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-confusion-risk,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/entity-consistency-score,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-disambiguation-strategy,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-drift,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/entity-first-architecture,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/entity-first-content,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-fragmentation,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-recognition-accuracy,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-relationship-mapping,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/entity-saturation-score,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/evidence-density-score,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/evidence-supported-claims,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/follow-up-intent-chains,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/generation-bias,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/generative-visibility-engineering,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/hallucination-triggers,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/hybrid-search-intent,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/iterative-visibility-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/knowledge-decay,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/knowledge-graph-alignment,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/lead-slot-citation,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/llm-optimized-headings,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/methodology-schema,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/missing-attribution-error,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/model-aware-content-design,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/model-derived-visibility,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/model-temperature-effects,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/multi-engine-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/multi-engine-visibility-index,,410,Retired invented metric with no supported current equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
+/glossary/multi-source-answer-construction,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/platform-specific-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/predictive-visibility-intelligence,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/progressive-disclosure-content,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/prompt-engineering-for-visibility,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/prompt-injection-detection,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/qualified-visibility,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/query-interpretation-variability,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/query-naturalized-content,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/query-reformulation-patterns,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/real-time-vs-model-knowledge,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/recency-weighting,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/retrieval-augmented-generation-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/retrieval-bias,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/retrieval-confidence-score,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/schema-hierarchy-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/search-intelligence-engineering,/what-is-search-intelligence-engineering,308,Retired canonical glossary definition has a direct current equivalent; preserve inbound authority with one permanent hop,unknown,unknown,passed
+/glossary/semantic-search-intelligence,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/semantic-territory-claiming,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/source-diversity-algorithms,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/source-diversity-score,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/source-preference-patterns,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/structured-evidence-object,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/structured-faq-stack,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/terminology-canon-page,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/token-bias,,,Priority on-thesis definition; rebuild on the same URL before any retirement,unknown,high,pending
+/glossary/token-economy-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/topic-authority-weight,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/topic-coverage-breadth,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/user-intent-correction,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/vector-search-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/vertical-ai-search-engines,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-baseline,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-blind-spots,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-gap,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-layering,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-share-of-voice,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-to-revenue-tracking,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/visibility-velocity,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
+/glossary/zero-click-answer-optimization,,,Legacy public definition; preserve for URL-level Search Console backlink and editorial review before redirect or retirement,unknown,unknown,pending
 /industries,,410,Index of nine retired vertical pages; would serve links to Gone URLs; 410 Gone via src/proxy.ts,unknown,unknown,passed
 /industries/accounting-firms,,410,Off-thesis vertical positioning retired with the previous site; 410 Gone via src/proxy.ts,unknown,unknown,passed
 /industries/consulting-firms,,410,Off-thesis vertical positioning retired with the previous site; 410 Gone via src/proxy.ts,unknown,unknown,passed
@@ -44,6 +170,7 @@ old_url,new_url,redirect_type,rationale,backlink_priority,search_traffic_priorit
 /insights/ai-agents-vs-automation-difference,,410,Off-thesis autonomous agent archive; no Search Intelligence Engineering equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
 /insights/ai-consulting-vs-ai-architecture,,410,Off-thesis autonomous agent archive; no Search Intelligence Engineering equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
 /insights/ai-experimentation-vs-transformation,,410,Off-thesis autonomous agent archive; no Search Intelligence Engineering equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
+/insights/ai-search-visibility-revenue-impact,/solutions/search-impact-measurement,308,LinkedIn and Perplexity still reference the retired article; the live solution directly answers its visibility-to-pipeline intent,unknown,high,passed
 /insights/architecture-precedes-automation,,410,Off-thesis autonomous agent archive; no Search Intelligence Engineering equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
 /insights/autonomous-ai-agent-architecture-for-enterprise,,410,Off-thesis autonomous agent archive; no Search Intelligence Engineering equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
 /insights/batch-vs-stream-processing-ai-agent-architectures,,410,Off-thesis autonomous agent archive; no Search Intelligence Engineering equivalent; 410 Gone via src/proxy.ts,unknown,unknown,passed
