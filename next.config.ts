@@ -53,9 +53,20 @@ const securityHeaders = [
  */
 const legacyRedirects: ReadonlyArray<readonly [source: string, destination: string]> = [
   // Category vocabulary. These carried the term the firm invented.
-  ['/search-intelligence-engineering', '/what-is-search-intelligence-engineering'],
-  ['/ai-search-intelligence', '/what-is-search-intelligence-engineering'],
-  ['/glossary', '/what-is-search-intelligence-engineering'],
+  [
+    '/search-intelligence-engineering',
+    'https://hendricks.ai/what-is-search-intelligence-engineering',
+  ],
+  ['/ai-search-intelligence', 'https://hendricks.ai/what-is-search-intelligence-engineering'],
+  ['/glossary', 'https://hendricks.ai/what-is-search-intelligence-engineering'],
+  [
+    '/glossary/search-intelligence-engineering',
+    'https://hendricks.ai/what-is-search-intelligence-engineering',
+  ],
+  [
+    '/glossary/ai-search-visibility',
+    'https://hendricks.ai/what-is-ai-mediated-search#vocabulary',
+  ],
 
   // Solutions IA from the retired builds.
   ['/search-intelligence-solutions', '/solutions'],
@@ -106,7 +117,10 @@ const legacyRedirects: ReadonlyArray<readonly [source: string, destination: stri
    * actually answers the query rather than telling the one interested visitor
    * the resource is gone.
    */
-  ['/insights/ai-search-visibility-revenue-impact', '/solutions/search-impact-measurement'],
+  [
+    '/insights/ai-search-visibility-revenue-impact',
+    'https://hendricks.ai/solutions/search-impact-measurement',
+  ],
   ['/solutions/system', '/how-it-works'],
   ['/solutions/partnership', '/for-agencies'],
 
@@ -211,9 +225,10 @@ const nextConfig: NextConfig = {
    *
    * A single hop from www needs two things together: the rule ahead of the host
    * catch-all, and an absolute destination on the apex. The on-thesis insight
-   * rule has both. The legacy map keeps relative destinations, so a www request
-   * for one of those 23 paths still costs two hops whichever side of the host
-   * rule it sits on, and moving it buys nothing on its own.
+   * rule and every absolute entry in the legacy map have these properties.
+   * Relative legacy destinations still cost two hops from www, but the
+   * authority-bearing vocabulary and LinkedIn routes use apex-absolute
+   * destinations here.
    *
    * A trailing slash costs one hop more, on every legacy path equally. Next's
    * own `/:path+/` normalisation rule runs first and strips the slash, so
@@ -225,6 +240,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       onThesisInsightRedirect,
+      ...legacyRedirects.map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
       /**
        * One canonical host. Both hostnames resolve to this project, so without a
        * redirect the whole site is served twice and every page competes with its
@@ -237,11 +257,6 @@ const nextConfig: NextConfig = {
         destination: 'https://hendricks.ai/:path*',
         permanent: true,
       },
-      ...legacyRedirects.map(([source, destination]) => ({
-        source,
-        destination,
-        permanent: true,
-      })),
     ]
   },
 }

@@ -190,9 +190,12 @@ describe('Legacy redirects', () => {
 
   it('sends every internal destination to a route that is built', async () => {
     for (const rule of await rules) {
-      if (rule.destination.startsWith('http')) continue
+      const destination = new URL(rule.destination, 'https://hendricks.ai')
 
-      const target = Object.values(routes).find((route) => route.path === rule.destination)
+      if (!['hendricks.ai', 'www.hendricks.ai'].includes(destination.hostname)) continue
+      if (destination.pathname.includes(':') || destination.pathname.includes('*')) continue
+
+      const target = Object.values(routes).find((route) => route.path === destination.pathname)
       expect(target, `redirect ${rule.source} points at no known route`).toBeDefined()
       expect(
         target?.built,

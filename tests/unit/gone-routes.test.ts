@@ -27,6 +27,12 @@ import { indexableBuiltRoutes, isBuilt, routes } from '@/config/routes'
 
 const ON_THESIS_SOURCE = '/insights/how-ai-search-engines-cite-mid-market-firms-2026'
 const ON_THESIS_DESTINATION = 'https://hendricks.ai/solutions/selection-intelligence'
+const LEGACY_SIE_GLOSSARY_SOURCE = '/glossary/search-intelligence-engineering'
+const LEGACY_SIE_GLOSSARY_DESTINATION =
+  'https://hendricks.ai/what-is-search-intelligence-engineering'
+const LEGACY_AI_VISIBILITY_SOURCE = '/glossary/ai-search-visibility'
+const LEGACY_AI_VISIBILITY_DESTINATION =
+  'https://hendricks.ai/what-is-ai-mediated-search#vocabulary'
 
 const allRoutePaths: string[] = Object.values(routes).map((route) => route.path)
 const builtRoutePaths: string[] = Object.values(routes)
@@ -250,6 +256,75 @@ describe('Gone list against next.config.ts', () => {
     expect(literalRedirectSources).not.toContain('/glossary/multi-engine-visibility-index')
     expect(isGone('/glossary/multi-engine-visibility-index')).toBe(true)
   })
+
+  it('preserves the retired Search Intelligence Engineering glossary URL', () => {
+    const rule = redirectRules.find(
+      (candidate) => candidate.source === LEGACY_SIE_GLOSSARY_SOURCE,
+    )
+
+    expect(rule, 'the retired canonical glossary URL has no redirect').toBeDefined()
+    expect(rule?.destination).toBe(LEGACY_SIE_GLOSSARY_DESTINATION)
+    expect(rule?.permanent).toBe(true)
+    expect(isBuilt(new URL(LEGACY_SIE_GLOSSARY_DESTINATION).pathname)).toBe(true)
+    expect(isGone(LEGACY_SIE_GLOSSARY_SOURCE)).toBe(false)
+    expect(literalRedirectSources).not.toContain(
+      new URL(LEGACY_SIE_GLOSSARY_DESTINATION).pathname,
+    )
+  })
+
+  it('resolves the retired glossary URL in one hop from www', () => {
+    expect(LEGACY_SIE_GLOSSARY_DESTINATION.startsWith('https://hendricks.ai/')).toBe(true)
+
+    const ownIndex = redirectRules.findIndex(
+      (rule) => rule.source === LEGACY_SIE_GLOSSARY_SOURCE,
+    )
+    const hostIndex = redirectRules.findIndex((rule) =>
+      rule.has?.some((condition) => condition.type === 'host'),
+    )
+
+    expect(ownIndex).toBeGreaterThanOrEqual(0)
+    expect(hostIndex).toBeGreaterThanOrEqual(0)
+    expect(ownIndex).toBeLessThan(hostIndex)
+  })
+
+  it('preserves the retired AI search visibility definition at its canonical section', () => {
+    const rule = redirectRules.find(
+      (candidate) => candidate.source === LEGACY_AI_VISIBILITY_SOURCE,
+    )
+
+    expect(rule, 'the retired AI search visibility URL has no redirect').toBeDefined()
+    expect(rule?.destination).toBe(LEGACY_AI_VISIBILITY_DESTINATION)
+    expect(rule?.permanent).toBe(true)
+    expect(isBuilt(new URL(LEGACY_AI_VISIBILITY_DESTINATION).pathname)).toBe(true)
+    expect(isGone(LEGACY_AI_VISIBILITY_SOURCE)).toBe(false)
+  })
+
+  it('keeps every authority-bearing legacy route ahead of the www catch-all', () => {
+    const oneHopSources = [
+      '/search-intelligence-engineering',
+      '/ai-search-intelligence',
+      '/glossary',
+      LEGACY_SIE_GLOSSARY_SOURCE,
+      LEGACY_AI_VISIBILITY_SOURCE,
+      '/insights/ai-search-visibility-revenue-impact',
+    ]
+    const hostIndex = redirectRules.findIndex((rule) =>
+      rule.has?.some((condition) => condition.type === 'host'),
+    )
+
+    expect(hostIndex).toBeGreaterThanOrEqual(0)
+
+    for (const source of oneHopSources) {
+      const ownIndex = redirectRules.findIndex((rule) => rule.source === source)
+      const destination = redirectRules[ownIndex]?.destination
+
+      expect(ownIndex, `${source} has no redirect`).toBeGreaterThanOrEqual(0)
+      expect(ownIndex, `${source} follows the host catch-all`).toBeLessThan(hostIndex)
+      expect(destination, `${source} does not land directly on the apex`).toMatch(
+        /^https:\/\/hendricks\.ai\//,
+      )
+    }
+  })
 })
 
 describe('isGone', () => {
@@ -379,6 +454,41 @@ describe('Redirect map', () => {
     expect(row?.redirect_type).toBe('308')
     expect(row?.new_url).toBe('/research')
     expect(row?.qa_status).toBe('passed')
+  })
+
+  it('records the retired Search Intelligence Engineering glossary URL', () => {
+    const row = byPath.get(LEGACY_SIE_GLOSSARY_SOURCE)
+
+    expect(row?.redirect_type).toBe('308')
+    expect(row?.new_url).toBe(new URL(LEGACY_SIE_GLOSSARY_DESTINATION).pathname)
+    expect(row?.qa_status).toBe('passed')
+  })
+
+  it('records the retired AI search visibility definition', () => {
+    const row = byPath.get(LEGACY_AI_VISIBILITY_SOURCE)
+
+    expect(row?.redirect_type).toBe('308')
+    expect(row?.new_url).toBe('/what-is-ai-mediated-search#vocabulary')
+    expect(row?.qa_status).toBe('passed')
+  })
+
+  it('inventories every public route from the retired glossary', () => {
+    const glossaryRows = rows.filter(
+      (row) => row.old_url === '/glossary' || row.old_url.startsWith('/glossary/'),
+    )
+    const pendingChildren = glossaryRows.filter(
+      (row) => row.old_url !== '/glossary' && row.qa_status === 'pending',
+    )
+
+    // The archive held one hub plus 126 unique term slugs. A missing row is a
+    // silent migration decision, which is how the 124 production 404s formed.
+    expect(glossaryRows).toHaveLength(127)
+    expect(new Set(glossaryRows.map((row) => row.old_url)).size).toBe(127)
+    expect(pendingChildren).toHaveLength(123)
+    expect(
+      redirectRules.some((rule) => rule.source === '/glossary/:path*'),
+      'unrelated glossary terms must not be bulk redirected',
+    ).toBe(false)
   })
 
   it('leaves the two undisposed URLs undisposed', () => {
