@@ -25,11 +25,10 @@ import { routes } from '@/config/routes'
  *    2026-08-17 and reduced to `['Merkle', 'SolarWinds']` in commit 57371c6 the
  *    same day. `tests/unit/json-ld.test.ts` now pins it.
  *
- *    THE LOG NOW HOLDS THREE ENTRIES, NEWEST FIRST. The two added on 2026-08-19
- *    both correct `/research/hendricks-selection-baseline`, and that page states
- *    in its own copy that both are recorded here. If either entry is removed,
- *    the study page becomes false in its own corrections section. Add entries at
- *    the head of the array; the page renders them in array order.
+ *    THE LOG NOW HOLDS SEVEN ENTRIES, NEWEST FIRST. The newest records the
+ *    v2026.09.2 documentation and methodology correction to The Answer Index.
+ *    The remaining six preserve the earlier research and identity corrections.
+ *    Add entries at the head of the array; the page renders them in array order.
  *
  * 2. NAMING DENTSU IS THE POINT, NOT A C1 BREACH. CONTENT_VERIFICATION.md C1
  *    blocks a client or employer name used to borrow its credibility, and blocks
@@ -161,10 +160,11 @@ export const recording = {
 } as const
 
 /**
- * The log. Six entries, newest first. The seed entry is per decision 1 above.
+ * The log. Seven entries, newest first. The seed entry is per decision 1 above.
  *
  * `published` and `corrected` are ISO dates so the page can render machine
- * readable <time> elements. They are the same date in the three August entries,
+ * readable <time> elements. The newest correction fixes a package first
+ * published on 2026-09-01. The dates are the same in the three August entries,
  * which is a fact about those corrections rather than a placeholder: each wrong
  * claim shipped and was corrected on the same day. The three 2026-09-01 entries
  * correct claims published on 2026-08-19, so their two dates differ.
@@ -179,7 +179,7 @@ export const recording = {
 export const log = {
   eyebrow: 'Log',
   title: 'Corrections to date.',
-  lead: 'Six entries, newest first. The log does not reconstruct changes made before this page existed.',
+  lead: 'Seven entries, newest first. The log does not reconstruct changes made before this page existed.',
   /* The labels on each entry's fields. Held here so the log and any future
      rendering of it cannot label the same field differently. */
   fieldLabels: {
@@ -191,6 +191,23 @@ export const log = {
     change: 'What changed',
   },
   entries: [
+    {
+      id: 'answer-index-v2026-09-2-release-record',
+      title:
+        'Incomplete release metadata and audit disclosures in The Answer Index v2026.09.1 data package',
+      published: '2026-09-01',
+      corrected: '2026-10-04',
+      page: {
+        label: 'The Answer Index',
+        href: routes.researchTheAnswerIndex.path,
+      },
+      claim:
+        'Data package v2026.09.1, exact DOI 10.5281/zenodo.22242103, shipped without complete release and citation metadata, described probe completion without cleanly separating 1,920 planned probes from 1,919 measured probes, did not ship the 11 google.com retrieval-plumbing events excluded from the analytic corpus, and did not explicitly state that no independent browser-screenshot control was run or preserved for the Google AI Overview figures.',
+      fault:
+        'The analytic corpus and reported findings were unchanged, but the package did not expose a complete audit trail for its exclusion or state the browser-control limitation as plainly as the evidence required. Under this policy, an incomplete method or limitation description is a correction even when the published analytic totals remain unchanged.',
+      change:
+        'On 2026-10-04, Hendricks published data package v2026.09.2 under exact DOI 10.5281/zenodo.23132107. It adds complete release and citation metadata, distinguishes planned from measured probes, ships excluded-cite-events.csv with all 11 retrieval-plumbing events, and makes the missing browser-screenshot control explicit. No question, captured observation, source classification, analytic table, reported finding, panel version, or panel hash changed. The v2026.09.1 record remains preserved at its exact DOI.',
+    },
     {
       id: 'baseline-aio-parser-bailout',
       title: 'A Google AI Overviews reading produced by a parser that discarded rendered panels, on the Hendricks Selection Baseline',
@@ -302,7 +319,7 @@ export const limitation = {
  * has a built entry, and the sentence would misdescribe a policy page.
  */
 export const sources = {
-  reviewed: '2026-08-19',
+  reviewed: '2026-10-04',
   basis:
     'This page states the Hendricks corrections policy and the corrections made to this site. It reports no third-party research and cites no external source.',
   appliedIn: [] as readonly { label: string; href: string }[],

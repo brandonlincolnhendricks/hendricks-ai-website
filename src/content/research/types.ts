@@ -144,6 +144,8 @@ export type ResearchDataset = {
   description: string
   /** Public release version carried by both the page and the Dataset node. */
   version: string
+  /** Publication date of this exact archived release. */
+  datePublished: string
   /** Discovery terms published with the archived release. */
   keywords: readonly string[]
   /** True only when the complete release is publicly downloadable. */

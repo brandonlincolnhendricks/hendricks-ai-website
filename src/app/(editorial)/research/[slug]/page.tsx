@@ -221,6 +221,7 @@ export default async function ResearchArticlePage({
                   name: content.dataset.name,
                   description: content.dataset.description,
                   version: content.dataset.version,
+                  datePublished: content.dataset.datePublished,
                   keywords: content.dataset.keywords,
                   isAccessibleForFree: content.dataset.isAccessibleForFree,
                   doi: content.dataset.doi,
@@ -261,6 +262,9 @@ export default async function ResearchArticlePage({
             <li>{series.edition}</li>
             <li>
               {series.labels.packageVersion} {series.packageVersion}
+            </li>
+            <li>
+              {series.labels.releaseDate} {formatLongDate(series.releaseDate)}
             </li>
             <li>{series.cadence}</li>
           </ul>
@@ -632,6 +636,14 @@ export default async function ResearchArticlePage({
                   <div className="pubrec-row">
                     <dt>{series.labels.packageVersion}</dt>
                     <dd>{series.packageVersion}</dd>
+                  </div>
+                  <div className="pubrec-row">
+                    <dt>{series.labels.releaseDate}</dt>
+                    <dd>
+                      <time dateTime={series.releaseDate}>
+                        {formatLongDate(series.releaseDate)}
+                      </time>
+                    </dd>
                   </div>
                   <div className="pubrec-row">
                     <dt>{series.labels.cadence}</dt>

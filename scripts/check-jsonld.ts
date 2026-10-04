@@ -210,6 +210,7 @@ function buildResearchGraphs(): { path: string; graph: unknown[] }[] {
           name: ds.name,
           description: ds.description,
           version: ds.version,
+          datePublished: ds.datePublished,
           keywords: ds.keywords,
           isAccessibleForFree: ds.isAccessibleForFree,
           doi: ds.doi,

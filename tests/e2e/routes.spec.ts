@@ -406,7 +406,13 @@ test.describe('Definition pages', () => {
     test(`${page_.path} shows the direct answer above every other section`, async ({ page }) => {
       await page.goto(page_.path)
 
-      const answer = page.getByText(page_.content.directAnswer.answer, { exact: true })
+      // Scope to the answer-first block. The expanded Search Intelligence
+      // Engineering page also repeats the definition in its visible FAQ, so a
+      // page-wide exact-text locator would fail strict mode without testing the
+      // placement contract this assertion is meant to protect.
+      const answer = page
+        .locator('#answer')
+        .getByText(page_.content.directAnswer.answer, { exact: true })
       await expect(answer).toBeVisible()
 
       // It must sit high enough to be the first thing read after the H1.

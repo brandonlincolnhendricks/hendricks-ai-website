@@ -530,6 +530,7 @@ export function datasetSchema({
   name,
   description,
   version,
+  datePublished,
   keywords,
   isAccessibleForFree,
   doi,
@@ -542,6 +543,7 @@ export function datasetSchema({
   name: string
   description: string
   version: string
+  datePublished: string
   keywords: readonly string[]
   isAccessibleForFree: boolean
   doi: { label: string; href: string }
@@ -562,6 +564,7 @@ export function datasetSchema({
     name,
     description,
     version,
+    datePublished,
     keywords: [...keywords],
     isAccessibleForFree,
     identifier: doi.href,

@@ -88,8 +88,15 @@ async function decideConsent(page: Page, analytics: 'granted' | 'denied'): Promi
  * the whole run would start refusing the sixth.
  */
 async function ownBucket(page: Page, label: string): Promise<void> {
-  const octet = Math.abs(hash(label)) % 250
-  await page.setExtraHTTPHeaders({ 'x-forwarded-for': `198.51.100.${octet + 1}` })
+  // Keep the full 32-bit hash instead of collapsing every case into 250 IPv4
+  // addresses. The smaller pool lets unrelated cases collide during the full
+  // five-project matrix and can make an ordinary validation test hit the shared
+  // form rate limit. 2001:db8::/32 is reserved for documentation and gives each
+  // deterministic test label its own valid, non-routable IPv6 identifier.
+  const bucket = hash(label) >>> 0
+  const high = (bucket >>> 16).toString(16)
+  const low = (bucket & 0xffff).toString(16)
+  await page.setExtraHTTPHeaders({ 'x-forwarded-for': `2001:db8:${high}:${low}::1` })
 }
 
 /** Opens a form page with the consent decision already recorded. */

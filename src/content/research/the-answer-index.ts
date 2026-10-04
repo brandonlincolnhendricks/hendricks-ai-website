@@ -398,11 +398,13 @@ export const data = {
 export const series = {
   name: 'The Answer Index',
   edition: 'Edition 1, September 2026',
-  packageVersion: 'v2026.09.1',
+  packageVersion: 'v2026.09.2',
+  releaseDate: '2026-10-04',
   cadence: 'Quarterly',
   labels: {
     edition: 'Edition',
     packageVersion: 'Package version',
+    releaseDate: 'Released',
     cadence: 'Cadence',
     dataDoi: 'Data DOI',
     latestVersion: 'Latest version',
@@ -411,8 +413,8 @@ export const series = {
     relatedSolution: 'Related solution',
   },
   dataDoi: {
-    label: '10.5281/zenodo.22242103',
-    href: 'https://doi.org/10.5281/zenodo.22242103',
+    label: '10.5281/zenodo.23132107',
+    href: 'https://doi.org/10.5281/zenodo.23132107',
   },
   latestVersionDoi: {
     label: '10.5281/zenodo.22242102',
@@ -437,17 +439,17 @@ export const downloads = {
     },
     {
       cta: {
-        label: 'Download the data package (ZIP, 19 files)',
-        href: '/research/the-answer-index/the-answer-index-2026-09-v2026.09.1.zip',
+        label: 'Download the data package (ZIP, 20 files)',
+        href: '/research/the-answer-index/the-answer-index-2026-09-v2026.09.2.zip',
         external: true,
         analytics: { location: 'tai_download_data' },
       } satisfies Cta,
-      note: '333 KB. The full 480-question panel, one row per citation event, every domain\u2019s classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests. md5 9a0a18ef97e7dcafe41e07c2ce19d804, matching the Zenodo copy exactly.',
+      note: '337 KB. The full 480-question panel, one row per analytic citation event, the 11-event exclusion ledger, every analytic domain\u2019s classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests. md5 e865d744109fdad853ab68fac9c2b973, matching the Zenodo copy exactly.',
     },
     {
       cta: {
         label: 'Cite the dataset at its DOI',
-        href: 'https://doi.org/10.5281/zenodo.22242103',
+        href: 'https://doi.org/10.5281/zenodo.23132107',
         external: true,
         analytics: { location: 'tai_download_doi' },
       } satisfies Cta,
@@ -465,15 +467,15 @@ export const downloads = {
  * DOI is the identifier for this specific release; the concept DOI always
  * resolves to the latest version.
  *
- * `contentSize` values are the byte counts of the files served from public/:
- * 938,854 bytes for the PDF and 341,101 bytes for the ZIP, both verified by
- * the sha256 check in the types contract.
+ * `contentSize` is the byte count of the ZIP served from public/, verified by
+ * the SHA-256 check in the research contract.
  */
 export const dataset: ResearchDataset = {
   name: 'The Answer Index, Edition 1, September 2026',
   description:
     'The full 480-question panel from run-2026-09-01T022903Z: one row per citation event, the complete panel, every domain classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests.',
   version: series.packageVersion,
+  datePublished: series.releaseDate,
   keywords: [
     'AI-mediated search',
     'Search Intelligence Engineering',
@@ -484,8 +486,8 @@ export const dataset: ResearchDataset = {
   ],
   isAccessibleForFree: true,
   doi: {
-    label: '10.5281/zenodo.22242103',
-    href: 'https://doi.org/10.5281/zenodo.22242103',
+    label: '10.5281/zenodo.23132107',
+    href: 'https://doi.org/10.5281/zenodo.23132107',
   },
   latestVersionDoi: {
     label: '10.5281/zenodo.22242102',
@@ -505,10 +507,10 @@ export const dataset: ResearchDataset = {
     'Question',
   ],
   distribution: {
-    contentUrl: '/research/the-answer-index/the-answer-index-2026-09-v2026.09.1.zip',
+    contentUrl: '/research/the-answer-index/the-answer-index-2026-09-v2026.09.2.zip',
     encodingFormat: 'application/zip',
-    contentSize: 332804,
-    sha256: '907962013e73c2acb306f61b46035d63ea00f57dfc03641c1a6f032dafc9e93a',
+    contentSize: 336595,
+    sha256: '592535c770319b14d3fcebb51c3a41e30d390c75c80ecaca54583309709403b0',
   },
 } as const
 
@@ -723,9 +725,8 @@ export const byline = {
 
 /** Element 14. */
 /**
- * Item 11. The dated record. One entry, because the page has been corrected
- * zero times and says so in its own corrections prose; the row is the machine
- * readable form of that sentence rather than a second claim.
+ * Item 11. The dated record. The current release update moves the derived
+ * updated date without changing the study's original publication date.
  */
 export const changes: readonly [ChangeEntry, ...ChangeEntry[]] = [
   {
@@ -734,13 +735,19 @@ export const changes: readonly [ChangeEntry, ...ChangeEntry[]] = [
     summary:
       'First publication. Six findings from run-2026-09-01T022903Z against panel v2.0, with the 480-question corpus published as an open data package.',
   },
+  {
+    date: '2026-10-04',
+    kind: 'correction',
+    summary:
+      'Corrected the release documentation and methodology record in data package v2026.09.2; the questions, observations, classifications, analytic tables, reported findings, panel version, and panel hash did not change.',
+  },
 ]
 
 export const corrections = {
   eyebrow: 'Corrections',
-  title: 'No corrections to this page yet, and forty findings that never reached it',
+  title: 'One documentation and methodology correction, and forty findings that never reached the page',
   body: [
-    'This page has been corrected zero times. That is a statement about its age rather than about its accuracy, and it is published as a starting count so a later reader can see whether it moved.',
+    'Correction, 2026-10-04. Hendricks superseded data package v2026.09.1, exact DOI 10.5281/zenodo.22242103, with v2026.09.2, exact DOI 10.5281/zenodo.23132107. The corrected release adds complete release and citation metadata, distinguishes 1,920 planned probes from 1,919 measured probes, ships the 11 excluded google.com retrieval-plumbing events in an explicit ledger, and states that no independent browser-screenshot control was run or preserved for Google AI Overviews. No question, captured observation, source classification, analytic table, reported finding, panel version, or panel hash changed.',
     'Forty candidate findings were refuted during production rather than corrected after it, including an earlier seller-share figure whose definition quietly included directories and an earlier Reddit headline that conflated presence with mass. They are recorded under Errors Found rather than quietly dropped.',
     'If a figure here is wrong, or a third party recomputes the corpus and gets a materially different result, the correction is published with its date, the original figure, the contradicting result, and what changed. Nothing on this page is quietly edited, and the updated date above moves with the correction.',
     'A firm selling measurement discipline has to be correctable in public. The corrections log carries every entry for every page in this section.',
@@ -774,9 +781,9 @@ export const relatedSolution = {
 
 /** Element 9. No `citations` array. First-party measurement only. */
 export const sources = {
-  reviewed: '2026-09-01',
+  reviewed: '2026-10-04',
   basis:
-    'This page reports first-party measurement produced by Hendricks. Every figure is read from run-2026-09-01T022903Z or, for the two self-agreement figures, run-2026-09-01T014944Z, both taken against panel v2.0, sha 7a15060d8b5ec5f6, with immutable run files keyed by run id. The full corpus is published as an open data package carrying one row per cite event, the complete panel, every domain’s classification with how it was assigned, the 60-domain blind audit, and per-file digests, so every figure on this page can be recomputed without re-running the panel. The package is archived at Zenodo under DOI 10.5281/zenodo.22242103, and DOI 10.5281/zenodo.22242102 always resolves to its latest version. The page reports no third-party research, no vendor study, and no statistic from anyone else, and therefore cites none.',
+    'This page reports first-party measurement produced by Hendricks. Every figure is read from run-2026-09-01T022903Z or, for the two self-agreement figures, run-2026-09-01T014944Z, both taken against panel v2.0, sha 7a15060d8b5ec5f6, with immutable run files keyed by run id. The full corpus is published as an open data package carrying one row per analytic cite event, the complete panel, the 11-event exclusion ledger, every analytic domain’s classification with how it was assigned, the 60-domain blind audit, and per-file digests, so every figure on this page can be recomputed without re-running the panel. Package v2026.09.2 is archived at Zenodo under DOI 10.5281/zenodo.23132107, and DOI 10.5281/zenodo.22242102 always resolves to its latest version. The page reports no third-party research, no vendor study, and no statistic from anyone else, and therefore cites none.',
   appliedIn: [
     { label: 'the Selection Intelligence solution', href: routes.selectionIntelligence.path },
     { label: 'the Methodology', href: routes.methodology.path },

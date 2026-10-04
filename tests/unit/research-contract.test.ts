@@ -18,7 +18,7 @@
  * 7. The `limitations` section has at least one item.
  * 8. `byline.dataThrough` is a non-empty string.
  * 9. Studies carrying a `dataset` have a DOI href, release version, discovery
- *    keywords, explicit open-access state, a non-empty licence href, a
+ *    date, keywords, explicit open-access state, a non-empty licence href, a
  *    non-empty `temporalCoverage`, at least one `variableMeasured` entry, and a
  *    distribution with a non-empty `contentUrl`.
  *
@@ -168,6 +168,10 @@ describe('research article contract', () => {
         expect(ds.license.href, `${slug}: dataset.license.href`).toBeTruthy()
         expect(ds.license.name, `${slug}: dataset.license.name`).toBeTruthy()
         expect(ds.version, `${slug}: dataset.version`).toBeTruthy()
+        expect(
+          isIsoDate(ds.datePublished),
+          `${slug}: dataset.datePublished "${ds.datePublished}" is not a valid ISO date`,
+        ).toBe(true)
         expect(ds.keywords.length, `${slug}: dataset.keywords`).toBeGreaterThan(0)
         expect(ds.isAccessibleForFree, `${slug}: dataset.isAccessibleForFree`).toBe(true)
         expect(ds.temporalCoverage, `${slug}: dataset.temporalCoverage`).toBeTruthy()

@@ -306,6 +306,7 @@ describe('datasetSchema', () => {
     name: answerIndexDataset.name,
     description: answerIndexDataset.description,
     version: answerIndexDataset.version,
+    datePublished: answerIndexDataset.datePublished,
     keywords: answerIndexDataset.keywords,
     isAccessibleForFree: answerIndexDataset.isAccessibleForFree,
     doi: answerIndexDataset.doi,
@@ -316,7 +317,17 @@ describe('datasetSchema', () => {
   })
 
   it('publishes the archived release version, keywords, and access state', () => {
-    expect(schema.version).toBe('v2026.09.1')
+    expect(schema.version).toBe('v2026.09.2')
+    expect(schema.datePublished).toBe('2026-10-04')
+    expect(schema.identifier).toBe('https://doi.org/10.5281/zenodo.23132107')
+    expect(answerIndexDataset.latestVersionDoi?.href).toBe(
+      'https://doi.org/10.5281/zenodo.22242102',
+    )
+    expect(answerIndexDataset.distribution).toMatchObject({
+      contentUrl: '/research/the-answer-index/the-answer-index-2026-09-v2026.09.2.zip',
+      contentSize: 336595,
+      sha256: '592535c770319b14d3fcebb51c3a41e30d390c75c80ecaca54583309709403b0',
+    })
     expect(schema.keywords).toEqual(answerIndexDataset.keywords)
     expect(schema.isAccessibleForFree).toBe(true)
   })
