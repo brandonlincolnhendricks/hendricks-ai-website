@@ -195,8 +195,14 @@ Every figure is read from run-2026-09-01T022903Z against panel v2.0, sha 7a15060
 This page is the canonical version of the study. These are the same figures in forwardable and recomputable form, and the data package here is byte-identical to the copy archived at Zenodo.
 
 - Download the report (PDF, 13 pages): /research/the-answer-index/the-answer-index-2026-09.pdf. 917 KB. The six findings with their denominators, the limits, and the citation block, composed for print and forwarding.
-- Download the data package (ZIP, 19 files): /research/the-answer-index/the-answer-index-2026-09-v2026.09.1.zip. 333 KB. The full 480-question panel, one row per citation event, every domain's classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests. md5 9a0a18ef97e7dcafe41e07c2ce19d804, matching the Zenodo copy exactly.
-- Cite the dataset at its DOI: https://doi.org/10.5281/zenodo.22242103. The permanent identifier for this data release. DOI 10.5281/zenodo.22242102 always resolves to the latest version.
+- Download the data package (ZIP, 20 files): /research/the-answer-index/the-answer-index-2026-09-v2026.09.2.zip. 337 KB. The full 480-question panel, one row per analytic citation event, the 11-event exclusion ledger, every analytic domain's classification with how it was assigned, the 60-domain blind audit, the methodology, and per-file SHA-256 digests. md5 e865d744109fdad853ab68fac9c2b973, matching the Zenodo copy exactly.
+- Cite the dataset at its DOI: https://doi.org/10.5281/zenodo.23132107. The permanent identifier for this data release. DOI 10.5281/zenodo.22242102 always resolves to the latest version.
+
+Dataset version: v2026.09.2. Released 2026-10-04.
+
+Dataset keywords: AI-mediated search, Search Intelligence Engineering, Selection Intelligence, agentic search, AI retrieval, source selection.
+
+Access: Open access.
 
 ## Errors found
 
@@ -293,21 +299,28 @@ This is a description of what four engine APIs cited on one day, under one panel
 
 ## Byline
 
-Brandon Lincoln Hendricks, Search Intelligence Engineer, Hendricks. Published 2026-09-01. Updated 2026-09-01. Data through 2026-09-01.
+Brandon Lincoln Hendricks, Search Intelligence Engineer, Hendricks. Published 2026-09-01. Updated 2026-10-04. Data through 2026-09-01.
 
 Note: The published date and the data-through date are the same day because the corpus was captured, verified, and written up in one pass. The updated date moves when a figure, a method, or a limitation changes, and is not refreshed to signal activity.
 
 ## Corrections
 
-### No corrections to this page yet, and forty findings that never reached it
+### One documentation and methodology correction, and forty findings that never reached the page
 
-This page has been corrected zero times. That is a statement about its age rather than about its accuracy, and it is published as a starting count so a later reader can see whether it moved.
+Correction, 2026-10-04. Hendricks superseded data package v2026.09.1, exact DOI 10.5281/zenodo.22242103, with v2026.09.2, exact DOI 10.5281/zenodo.23132107. The corrected release adds complete release and citation metadata, distinguishes 1,920 planned probes from 1,919 measured probes, ships the 11 excluded google.com retrieval-plumbing events in an explicit ledger, and states that no independent browser-screenshot control was run or preserved for Google AI Overviews. No question, captured observation, source classification, analytic table, reported finding, panel version, or panel hash changed.
 
 Forty candidate findings were refuted during production rather than corrected after it, including an earlier seller-share figure whose definition quietly included directories and an earlier Reddit headline that conflated presence with mass. They are recorded under Errors Found rather than quietly dropped.
 
 If a figure here is wrong, or a third party recomputes the corpus and gets a materially different result, the correction is published with its date, the original figure, the contradicting result, and what changed. Nothing on this page is quietly edited, and the updated date above moves with the correction.
 
 A firm selling measurement discipline has to be correctable in public. The corrections log carries every entry for every page in this section.
+
+Change history:
+
+| Date | Kind | Summary |
+|---|---|---|
+| 2026-09-01 | publication | First publication. Six findings from run-2026-09-01T022903Z against panel v2.0, with the 480-question corpus published as an open data package. |
+| 2026-10-04 | correction | Corrected the release documentation and methodology record in data package v2026.09.2; the questions, observations, classifications, analytic tables, reported findings, panel version, and panel hash did not change. |
 
 CTA: Read the corrections policy
 
@@ -323,9 +336,9 @@ CTAs: See what a Selection Intelligence baseline covers. Read the Methodology.
 
 ## Sources
 
-Reviewed 2026-09-01.
+Reviewed 2026-10-04.
 
-This page reports first-party measurement produced by Hendricks. Every figure is read from run-2026-09-01T022903Z or, for the two self-agreement figures, run-2026-09-01T014944Z, both taken against panel v2.0, sha 7a15060d8b5ec5f6, with immutable run files keyed by run id. The full corpus is published as an open data package carrying one row per cite event, the complete panel, every domain's classification with how it was assigned, the 60-domain blind audit, and per-file digests, so every figure on this page can be recomputed without re-running the panel. The package is archived at Zenodo under DOI 10.5281/zenodo.22242103, and DOI 10.5281/zenodo.22242102 always resolves to its latest version. The page reports no third-party research, no vendor study, and no statistic from anyone else, and therefore cites none.
+This page reports first-party measurement produced by Hendricks. Every figure is read from run-2026-09-01T022903Z or, for the two self-agreement figures, run-2026-09-01T014944Z, both taken against panel v2.0, sha 7a15060d8b5ec5f6, with immutable run files keyed by run id. The full corpus is published as an open data package carrying one row per analytic cite event, the complete panel, the 11-event exclusion ledger, every analytic domain's classification with how it was assigned, the 60-domain blind audit, and per-file digests, so every figure on this page can be recomputed without re-running the panel. Package v2026.09.2 is archived at Zenodo under DOI 10.5281/zenodo.23132107, and DOI 10.5281/zenodo.22242102 always resolves to its latest version. The page reports no third-party research, no vendor study, and no statistic from anyone else, and therefore cites none.
 
 Applied in: the Selection Intelligence solution, the Methodology, the Search Intelligence Diagnostic.
 

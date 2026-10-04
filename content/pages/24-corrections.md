@@ -78,7 +78,17 @@ Where a published Hendricks figure is contradicted by someone running the same d
 
 Eyebrow: Log
 
-Six entries, newest first. The log does not reconstruct changes made before this page existed.
+Seven entries, newest first. The log does not reconstruct changes made before this page existed.
+
+### Incomplete release metadata and audit disclosures in The Answer Index v2026.09.1 data package
+
+Published 2026-09-01. Corrected 2026-10-04. Page: The Answer Index.
+
+What was published: Data package v2026.09.1, exact DOI 10.5281/zenodo.22242103, shipped without complete release and citation metadata, described probe completion without cleanly separating 1,920 planned probes from 1,919 measured probes, did not ship the 11 google.com retrieval-plumbing events excluded from the analytic corpus, and did not explicitly state that no independent browser-screenshot control was run or preserved for the Google AI Overview figures.
+
+What was wrong: The analytic corpus and reported findings were unchanged, but the package did not expose a complete audit trail for its exclusion or state the browser-control limitation as plainly as the evidence required. Under this policy, an incomplete method or limitation description is a correction even when the published analytic totals remain unchanged.
+
+What changed: On 2026-10-04, Hendricks published data package v2026.09.2 under exact DOI 10.5281/zenodo.23132107. It adds complete release and citation metadata, distinguishes planned from measured probes, ships excluded-cite-events.csv with all 11 retrieval-plumbing events, and makes the missing browser-screenshot control explicit. No question, captured observation, source classification, analytic table, reported finding, panel version, or panel hash changed. The v2026.09.1 record remains preserved at its exact DOI.
 
 ### A Google AI Overviews reading produced by a parser that discarded rendered panels, on the Hendricks Selection Baseline
 
@@ -158,7 +168,7 @@ The log records corrections to what Hendricks published. It is not a change log 
 
 This page states the Hendricks corrections policy and the corrections made to this site. It reports no third-party research and cites no external source.
 
-Last reviewed 2026-08-19.
+Last reviewed 2026-10-04.
 
 ## Closing
 

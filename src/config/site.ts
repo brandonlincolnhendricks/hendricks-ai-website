@@ -29,18 +29,27 @@ export const siteConfig = {
   founderPersonId: 'https://hendricks.ai/about#person',
   /**
    * Organization sameAs. Company LinkedIn only. The Search Economy is a
-   * Person-level join and must never appear here.
+   * separate organization Brandon founded, not a Hendricks profile, so it
+   * never appears here.
    */
   organizationSameAs: ['https://www.linkedin.com/company/hendricksai'] as const,
   /**
-   * Person sameAs on /about#person only. Medium essay, The Search Economy,
-   * personal LinkedIn, and X. Company LinkedIn stays off this list.
+   * Person sameAs on /about#person only. Profiles that identify Brandon
+   * himself: the personal site that is his entity home (its Person node lists
+   * /about back, so the two nodes join), ORCID, personal LinkedIn, X, GitHub,
+   * and the Medium profile. Company LinkedIn stays off this list.
+   *
+   * Publications and articles are not sameAs targets, because sameAs asserts
+   * the URL identifies the same entity. The Search Economy is declared instead
+   * as an organization he founded (`foundedOrganizationSchema` on /about).
    */
   personSameAs: [
-    'https://medium.com/@brandonlincolnhendricks/what-is-a-search-intelligence-engineer-f6211b8339a6',
-    'https://thesearcheconomy.com',
+    'https://brandonlincolnhendricks.com',
+    'https://orcid.org/0009-0001-5728-0790',
     'https://www.linkedin.com/in/brandonlincolnhendricks',
-    'https://x.com/brandonlincolnh',
+    'https://x.com/BrandonLincolnH',
+    'https://github.com/brandonlincolnhendricks',
+    'https://medium.com/@brandonlincolnhendricks',
   ] as const,
 } as const
 

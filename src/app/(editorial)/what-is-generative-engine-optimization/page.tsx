@@ -72,19 +72,15 @@ export default function WhatIsGenerativeEngineOptimizationPage() {
             hasBreadcrumb: true,
             dateModified: sources.reviewed,
             author: personAuthor(),
+            citation: [
+              new URL(routes.researchNoSharedSourceAcrossEngines.path, siteConfig.url).toString(),
+              new URL(routes.researchWhoGetsCitedInAiAnswers.path, siteConfig.url).toString(),
+            ],
           }),
           definedTermSchema({
             path: routes.whatIsGenerativeEngineOptimization.path,
             term: directAnswer.term,
             directAnswer: directAnswer.answer,
-            sameAs: [
-              new URL(routes.researchNoSharedSourceAcrossEngines.path, siteConfig.url).toString(),
-              new URL(routes.researchWhoGetsCitedInAiAnswers.path, siteConfig.url).toString(),
-            ],
-            citation: [
-              new URL(routes.researchNoSharedSourceAcrossEngines.path, siteConfig.url).toString(),
-              new URL(routes.researchWhoGetsCitedInAiAnswers.path, siteConfig.url).toString(),
-            ],
           }),
         )}
       />

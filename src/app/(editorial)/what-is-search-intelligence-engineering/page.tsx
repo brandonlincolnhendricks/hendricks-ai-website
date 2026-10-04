@@ -5,6 +5,9 @@ import { Answer } from '@/components/canvas/answer'
 import { Byline } from '@/components/canvas/byline'
 import { ChangeHistory } from '@/components/canvas/change-history'
 import { ClosingStation } from '@/components/canvas/closing-station'
+import { DefinitionList } from '@/components/canvas/definition-list'
+import { Limitations } from '@/components/canvas/limitations'
+import { MethodList } from '@/components/canvas/method-list'
 import { CanvasPageHero } from '@/components/canvas/page-hero'
 import { RailColumn } from '@/components/canvas/rail-column'
 import { RelatedRules } from '@/components/canvas/related-list'
@@ -15,27 +18,33 @@ import { TableRegion } from '@/components/canvas/table-region'
 import { Station } from '@/components/sections/station'
 import { JsonLd } from '@/components/seo/json-ld'
 import { RuleLink } from '@/components/ui/cta'
-import { TwoTone } from '@/components/ui/two-tone'
 import { routes } from '@/config/routes'
 import { siteConfig } from '@/config/site'
 import {
+  agenticPipeline,
+  brandImplications,
+  changeHistory,
   closing,
   contents,
+  disciplineRelationship,
   directAnswer,
+  faq,
+  foundationalAndExpert,
+  framework,
   hero,
   illustratedBy,
+  limitations,
   meta,
+  operatingModel,
   outcomes,
-  path,
+  pilot,
   related,
   relatedSection,
+  reproducibility,
   sources,
-  whatItIsNot,
-  whyEngineering,
   whyItExists,
 } from '@/content/pages/what-is-search-intelligence-engineering'
-import { isDefinitionRoute } from '@/content/shared/definition-routes'
-import { evidenceRule } from '@/content/shared/evidence-rule'
+import { DEFINED_TERM_MEMBERS, isDefinitionRoute } from '@/content/shared/definition-routes'
 import { publicationChrome } from '@/content/shared/publication-record'
 import {
   definedTermSchema,
@@ -68,6 +77,11 @@ export const metadata: Metadata = buildMetadata({
 
 const relatedTerms = related.filter((entry) => isDefinitionRoute(entry.href))
 const relatedWork = related.filter((entry) => !isDefinitionRoute(entry.href))
+const supportingCitations = [
+  new URL(routes.researchHendricksSelectionBaseline.path, siteConfig.url).toString(),
+  new URL(routes.researchTheAnswerIndex.path, siteConfig.url).toString(),
+  reproducibility.dataset.href,
+] as const
 
 export default function WhatIsSearchIntelligenceEngineeringPage() {
   return (
@@ -87,23 +101,13 @@ export default function WhatIsSearchIntelligenceEngineeringPage() {
             // its sources station. Pages without a visible date get none.
             dateModified: sources.reviewed,
             author: personAuthor(),
+            citation: supportingCitations,
           }),
-          definedTermSetSchema([
-            {
-              name: 'Search Intelligence Engineering',
-              path: routes.whatIsSearchIntelligenceEngineering.path,
-            },
-            { name: 'Selection Intelligence', path: routes.whatIsSelectionIntelligence.path },
-          ]),
+          definedTermSetSchema(DEFINED_TERM_MEMBERS),
           definedTermSchema({
             path: routes.whatIsSearchIntelligenceEngineering.path,
             term: directAnswer.term,
             directAnswer: directAnswer.answer,
-            sameAs: new URL(routes.researchHendricksSelectionBaseline.path, siteConfig.url).toString(),
-            citation: new URL(
-              routes.researchHendricksSelectionBaseline.path,
-              siteConfig.url,
-            ).toString(),
           }),
         )}
       />
@@ -127,6 +131,8 @@ export default function WhatIsSearchIntelligenceEngineeringPage() {
           labelId="direct-answer-label"
           paragraphs={[directAnswer.answer]}
         />
+
+        <p className="text-small mt-[16px] max-w-[60ch] text-ink-2">{directAnswer.note}</p>
 
         <div className="prose mt-[26px]">
           <p>{illustratedBy.body}</p>
@@ -152,27 +158,106 @@ export default function WhatIsSearchIntelligenceEngineeringPage() {
       {/* The body, beside its own contents. */}
       <div className="bodywrap">
         <RailColumn sections={contents}>
-          {/* 01. Why it exists */}
+          {/* 01. Why a larger discipline is needed */}
           <Station id="why-it-exists" ariaLabelledBy="why-exists-title" stack>
             <p className="text-eyebrow text-ink-2">{whyItExists.eyebrow}</p>
             <h2 id="why-exists-title" className="text-h2 text-ink">
               {whyItExists.title}
             </h2>
 
-            <TableRegion
-              caption={whyItExists.caption}
-              columns={whyItExists.columns}
-              rows={whyItExists.rows}
-            />
+            <div className="prose">
+              {whyItExists.body.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+              <p className="pull">{whyItExists.question}</p>
+            </div>
+
+            <RuleList items={whyItExists.events} ariaLabel={whyItExists.question} />
+          </Station>
+
+          {/* 02. Four-layer framework */}
+          <Station id="four-layer-framework" ariaLabelledBy="framework-title" stack>
+            <p className="text-eyebrow text-ink-2">{framework.eyebrow}</p>
+            <h2 id="framework-title" className="text-h2 text-ink">
+              {framework.title}
+            </h2>
+            <p className="text-lead text-ink">{framework.lead}</p>
+
+            <MethodList steps={framework.layers} ariaLabel={framework.title} />
+
+            <h3 className="text-h3 text-ink">Observable selection classes</h3>
+            <DefinitionList definitions={framework.selectionClasses} />
+
+            <h3 className="text-h3 text-ink">Revenue evidence tiers</h3>
+            <DefinitionList definitions={framework.revenueEvidence} />
+          </Station>
+
+          {/* 03. Agentic-search pipeline */}
+          <Station id="agentic-search-pipeline" ariaLabelledBy="pipeline-title" stack>
+            <p className="text-eyebrow text-ink-2">{agenticPipeline.eyebrow}</p>
+            <h2 id="pipeline-title" className="text-h2 text-ink">
+              {agenticPipeline.title}
+            </h2>
+            <p className="text-lead text-ink">{agenticPipeline.lead}</p>
+
+            <RuleList items={agenticPipeline.steps} ariaLabel={agenticPipeline.title} />
 
             <div className="prose">
-              {whyItExists.closing.map((line) => (
+              {agenticPipeline.closing.map((line) => (
                 <p key={line}>{line}</p>
               ))}
             </div>
           </Station>
 
-          {/* 02. Four outcomes */}
+          {/* 04. Foundational and expert views */}
+          <Station id="foundational-expert" ariaLabelledBy="views-title" stack>
+            <p className="text-eyebrow text-ink-2">{foundationalAndExpert.eyebrow}</p>
+            <h2 id="views-title" className="text-h2 text-ink">
+              {foundationalAndExpert.title}
+            </h2>
+
+            <TableRegion
+              caption={foundationalAndExpert.caption}
+              columns={foundationalAndExpert.columns}
+              rows={foundationalAndExpert.rows}
+            />
+          </Station>
+
+          {/* 05. Brand implications */}
+          <Station id="brand-implications" ariaLabelledBy="brand-title" stack>
+            <p className="text-eyebrow text-ink-2">{brandImplications.eyebrow}</p>
+            <h2 id="brand-title" className="text-h2 text-ink">
+              {brandImplications.title}
+            </h2>
+            <p id="brand-lead" className="text-lead text-ink">
+              {brandImplications.lead}
+            </p>
+
+            <RuleList items={brandImplications.items} ariaLabelledBy="brand-lead" />
+            <p className="opline">{brandImplications.closing}</p>
+          </Station>
+
+          {/* 06. Relationship to adjacent disciplines */}
+          <Station id="related-disciplines" ariaLabelledBy="disciplines-title" stack>
+            <p className="text-eyebrow text-ink-2">{disciplineRelationship.eyebrow}</p>
+            <h2 id="disciplines-title" className="text-h2 text-ink">
+              {disciplineRelationship.title}
+            </h2>
+
+            <TableRegion
+              caption={disciplineRelationship.caption}
+              columns={disciplineRelationship.columns}
+              rows={disciplineRelationship.rows}
+            />
+
+            <div className="prose">
+              {disciplineRelationship.closing.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
+          </Station>
+
+          {/* 07. Four outcomes and solution links */}
           <Station id="four-outcomes" ariaLabelledBy="outcomes-title" stack>
             <p className="text-eyebrow text-ink-2">{outcomes.eyebrow}</p>
             <h2 id="outcomes-title" className="text-h2 text-ink">
@@ -199,54 +284,76 @@ export default function WhatIsSearchIntelligenceEngineeringPage() {
             <p className="opline">{siteConfig.operatingLine}</p>
           </Station>
 
-          {/* 03. Why engineering */}
-          <Station id="why-engineering" ariaLabelledBy="why-engineering-title" stack>
-            <p className="text-eyebrow text-ink-2">{whyEngineering.eyebrow}</p>
-            <h2 id="why-engineering-title" className="text-h2 text-ink">
-              {whyEngineering.title}
+          {/* 08. Seven-step operating model */}
+          <Station id="operating-model" ariaLabelledBy="operating-model-title" stack>
+            <p className="text-eyebrow text-ink-2">{operatingModel.eyebrow}</p>
+            <h2 id="operating-model-title" className="text-h2 text-ink">
+              {operatingModel.title}
             </h2>
-            <p className="text-lead text-ink">{whyEngineering.lead}</p>
 
-            <RuleList items={whyEngineering.layers} ariaLabel={whyEngineering.lead} />
+            <MethodList steps={operatingModel.steps} ariaLabel={operatingModel.title} />
+            <RuleLink cta={operatingModel.cta} />
           </Station>
 
-          {/* 04. What it is not */}
-          <Station id="what-it-is-not" ariaLabelledBy="not-title" stack>
-            <p className="text-eyebrow text-ink-2">{whatItIsNot.eyebrow}</p>
-            <h2 id="not-title" className="text-h2 text-ink">
-              {whatItIsNot.title}
+          {/* 09. Pilot protocol */}
+          <Station id="pilot-protocol" ariaLabelledBy="pilot-title" stack>
+            <p className="text-eyebrow text-ink-2">{pilot.eyebrow}</p>
+            <h2 id="pilot-title" className="text-h2 text-ink">
+              {pilot.title}
             </h2>
 
-            <ul className="plainlist" aria-label={whatItIsNot.title}>
-              {whatItIsNot.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+            <div className="prose">
+              <p className="text-coordinate text-ink-2">{pilot.status}</p>
+              <p className="text-lead text-ink">{pilot.hypothesis}</p>
+            </div>
 
-            <TwoTone sentence={evidenceRule} className="pull" />
+            <MethodList steps={pilot.steps} ariaLabel={pilot.title} />
+
+            <div className="prose">
+              <p>{pilot.falsification}</p>
+              <p>{pilot.interpretation}</p>
+            </div>
           </Station>
 
-          {/* 05. The Demand-to-Selection path */}
-          <Station id="demand-to-selection-path" ariaLabelledBy="path-title" stack>
-            <p className="text-eyebrow text-ink-2">{path.eyebrow}</p>
-            <h2 id="path-title" className="text-h2 text-ink">
-              {path.title}
+          {/* 10. Limitations */}
+          <Station id="limitations" ariaLabelledBy="limitations-title" stack>
+            <p className="text-eyebrow text-ink-2">{limitations.eyebrow}</p>
+            <h2 id="limitations-title" className="text-h2 text-ink">
+              {limitations.title}
             </h2>
 
-            <p className="fig-note">{path.note}</p>
+            <Limitations label={limitations.label} items={limitations.items} />
+            <p className="opline">{limitations.closing}</p>
+          </Station>
 
-            <ol className="pathrail" aria-label={path.title}>
-              {path.steps.map((step, index) => (
-                <li key={step}>
-                  <span className="st" aria-hidden="true">
-                    {path.stageLabel} {String(index + 1).padStart(2, '0')}
-                  </span>
-                  {step}
-                </li>
+          {/* 11. Reproducibility and The Answer Index */}
+          <Station id="reproducibility" ariaLabelledBy="reproducibility-title" stack>
+            <p className="text-eyebrow text-ink-2">{reproducibility.eyebrow}</p>
+            <h2 id="reproducibility-title" className="text-h2 text-ink">
+              {reproducibility.title}
+            </h2>
+            <p className="text-lead text-ink">{reproducibility.lead}</p>
+
+            <RuleList items={reproducibility.requirements} ariaLabel={reproducibility.title} />
+
+            <div className="prose">
+              {reproducibility.body.map((line) => (
+                <p key={line}>{line}</p>
               ))}
-            </ol>
+            </div>
 
-            <RuleLink cta={path.cta} />
+            <RuleLink cta={reproducibility.study} />
+            <RuleLink cta={reproducibility.dataset} />
+          </Station>
+
+          {/* 12. Visible FAQ, deliberately without FAQPage markup */}
+          <Station id="faq" ariaLabelledBy="faq-title" stack>
+            <p className="text-eyebrow text-ink-2">{faq.eyebrow}</p>
+            <h2 id="faq-title" className="text-h2 text-ink">
+              {faq.title}
+            </h2>
+
+            <DefinitionList definitions={faq.entries} />
           </Station>
 
           <SourcesStation
@@ -261,7 +368,7 @@ export default function WhatIsSearchIntelligenceEngineeringPage() {
             <h2 id="changes-title" className="text-h2 text-ink">
               {publicationChrome.changeHistory.title}
             </h2>
-            <ChangeHistory />
+            <ChangeHistory entries={changeHistory} />
           </Station>
 
           {/* 08. Related terms */}

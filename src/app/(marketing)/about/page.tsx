@@ -28,7 +28,12 @@ import {
   related,
 } from '@/content/pages/about'
 import { hero as researchHero } from '@/content/research/hub'
-import { jsonLdGraph, personSchema, webPageSchema } from '@/lib/seo/json-ld'
+import {
+  foundedOrganizationSchema,
+  jsonLdGraph,
+  personSchema,
+  webPageSchema,
+} from '@/lib/seo/json-ld'
 import { buildMetadata } from '@/lib/seo/metadata'
 
 /**
@@ -81,6 +86,13 @@ export default function AboutPage() {
               { name: 'Merkle', jobTitle: 'Global Paid Search Director' },
               { name: 'SolarWinds', jobTitle: 'Global Search and Innovation Lead' },
             ],
+          }),
+          // The publication the "Also founded by Brandon" station names, with
+          // founder pointing at the Person node above.
+          foundedOrganizationSchema({
+            name: externalVenture.name,
+            url: externalVenture.cta.href,
+            type: 'NewsMediaOrganization',
           }),
         )}
       />

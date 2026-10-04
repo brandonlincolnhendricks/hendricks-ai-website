@@ -138,6 +138,9 @@ Organization fields only when verified:
 - `Person` for Brandon Lincoln Hendricks
 - `AboutPage`
 - `BreadcrumbList`
+- `NewsMediaOrganization` for The Search Economy, with `founder` pointing at the Person node and the same `@id` the publication's own site uses (`https://thesearcheconomy.com/#organization`)
+
+Person `sameAs` lists profiles that identify Brandon himself, starting with `https://brandonlincolnhendricks.com`, which is his entity home and lists /about back. Publications and individual articles are not `sameAs` targets.
 
 Do not add unverified client names to Person or Organization schema.
 

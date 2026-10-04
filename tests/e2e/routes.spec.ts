@@ -327,7 +327,10 @@ test.describe('Wide tables', () => {
   const tableRoutes = [
     { path: '/solutions/search-impact-measurement', caption: sim.evidenceGrades.caption },
     { path: '/methodology', caption: methodology.evidenceGrades.caption },
-    { path: '/what-is-search-intelligence-engineering', caption: wisie.whyItExists.caption },
+    {
+      path: '/what-is-search-intelligence-engineering',
+      caption: wisie.foundationalAndExpert.caption,
+    },
     // Two tables on this route. The surfaces table renders first and is the one
     // that carries the observed-scope column, so it is the one pinned here; the
     // caption test below still iterates both.
@@ -403,7 +406,13 @@ test.describe('Definition pages', () => {
     test(`${page_.path} shows the direct answer above every other section`, async ({ page }) => {
       await page.goto(page_.path)
 
-      const answer = page.getByText(page_.content.directAnswer.answer, { exact: true })
+      // Scope to the answer-first block. The expanded Search Intelligence
+      // Engineering page also repeats the definition in its visible FAQ, so a
+      // page-wide exact-text locator would fail strict mode without testing the
+      // placement contract this assertion is meant to protect.
+      const answer = page
+        .locator('#answer')
+        .getByText(page_.content.directAnswer.answer, { exact: true })
       await expect(answer).toBeVisible()
 
       // It must sit high enough to be the first thing read after the H1.

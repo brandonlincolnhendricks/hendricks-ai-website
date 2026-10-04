@@ -46,8 +46,8 @@ import { formatLongDate } from '@/lib/utils/format-date'
  * Three tiers, in the order the section is meant to be read: the flagship study
  * with its record and its downloads, the studies behind it, and the category
  * pages the studies are written in. D-C makes The Answer Index a quarterly
- * series, so the edition label, the package version and the cadence render; no
- * next-capture date does, because none has been scheduled.
+ * series, so the edition label, exact release date, package version and cadence
+ * render; no next-capture date does, because none has been scheduled.
  *
  * Each supporting study names its relation to the flagship in the flagship's
  * own words, read from `the-answer-index.ts` `related[]` by destination, so no
@@ -112,6 +112,9 @@ export default function ResearchHubPage() {
                 <li>
                   {series.labels.packageVersion} {series.packageVersion}
                 </li>
+                <li>
+                  {series.labels.releaseDate} {formatLongDate(series.releaseDate)}
+                </li>
                 <li>{series.cadence}</li>
               </ul>
               <h3 className="flagship-title" id="flagship-title">
@@ -175,6 +178,12 @@ export default function ResearchHubPage() {
                 <div className="pubrec-row">
                   <dt>{series.labels.packageVersion}</dt>
                   <dd>{series.packageVersion}</dd>
+                </div>
+                <div className="pubrec-row">
+                  <dt>{series.labels.releaseDate}</dt>
+                  <dd>
+                    <time dateTime={series.releaseDate}>{formatLongDate(series.releaseDate)}</time>
+                  </dd>
                 </div>
                 <div className="pubrec-row">
                   <dt>{series.labels.cadence}</dt>

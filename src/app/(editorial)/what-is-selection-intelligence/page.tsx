@@ -33,7 +33,7 @@ import {
   versusRankTracking,
   whyContext,
 } from '@/content/pages/what-is-selection-intelligence'
-import { isDefinitionRoute } from '@/content/shared/definition-routes'
+import { DEFINED_TERM_MEMBERS, isDefinitionRoute } from '@/content/shared/definition-routes'
 import { publicationChrome } from '@/content/shared/publication-record'
 import {
   definedTermSchema,
@@ -82,23 +82,16 @@ export default function WhatIsSelectionIntelligencePage() {
             // its sources station. Pages without a visible date get none.
             dateModified: sources.reviewed,
             author: personAuthor(),
-          }),
-          definedTermSetSchema([
-            {
-              name: 'Search Intelligence Engineering',
-              path: routes.whatIsSearchIntelligenceEngineering.path,
-            },
-            { name: 'Selection Intelligence', path: routes.whatIsSelectionIntelligence.path },
-          ]),
-          definedTermSchema({
-            path: routes.whatIsSelectionIntelligence.path,
-            term: directAnswer.term,
-            directAnswer: directAnswer.answer,
-            sameAs: new URL(routes.researchHendricksSelectionBaseline.path, siteConfig.url).toString(),
             citation: new URL(
               routes.researchHendricksSelectionBaseline.path,
               siteConfig.url,
             ).toString(),
+          }),
+          definedTermSetSchema(DEFINED_TERM_MEMBERS),
+          definedTermSchema({
+            path: routes.whatIsSelectionIntelligence.path,
+            term: directAnswer.term,
+            directAnswer: directAnswer.answer,
           }),
         )}
       />
